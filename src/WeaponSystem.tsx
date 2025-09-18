@@ -1,5 +1,6 @@
 import {
   ECSState,
+  EngineState,
   Entity,
   EntityID,
   EntitySchema,
@@ -13,7 +14,6 @@ import {
   createEntity,
   defineSystem,
   getComponent,
-  getMutableComponent,
   hasComponent,
   removeComponent,
   removeEntity,
@@ -94,7 +94,7 @@ export const WeaponActions = {
           Schema.Object({
             position: Schema.Tuple([Schema.Number(), Schema.Number(), Schema.Number()]),
             normal: Schema.Optional(Schema.Tuple([Schema.Number(), Schema.Number(), Schema.Number()])),
-            hitEntityUUID: EntitySchema.EntityUUID(),
+            hitEntityUUID: Schema.Optional(EntitySchema.EntityUUID()),
             isPlayer: Schema.Optional(Schema.Bool()),
             damage: Schema.Optional(Schema.Number())
           })
@@ -482,14 +482,14 @@ const WeaponReactor = (props: { viewerEntity: Entity }) => {
 
   useEffect(() => {
     if (!followCamera) return
-    if (followCamera.mode.value === FollowCameraMode.FirstPerson) return
-    getMutableComponent(viewerEntity, FollowCameraComponent).merge({
+    if (followCamera.mode === FollowCameraMode.FirstPerson) return
+    setComponent(viewerEntity, FollowCameraComponent, {
       mode: FollowCameraMode.FirstPerson,
       allowedModes: [FollowCameraMode.FirstPerson],
       pointerLock: true,
       smoothLerp: false
     })
-  }, [followCamera?.mode.value])
+  }, [followCamera?.mode])
 
   return null
 }

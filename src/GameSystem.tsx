@@ -1,24 +1,29 @@
 import { PresentationSystemGroup, defineSystem } from '@ir-engine/ecs'
-import {
-  UserID,
-  WorldUserState,
-  defineAction,
-  dispatchAction,
-  matchesUserID,
-  useMutableState
-} from '@ir-engine/hyperflux'
+import { Schema, UserID, WorldUserState, defineAction, dispatchAction, useMutableState } from '@ir-engine/hyperflux'
 import React, { useEffect } from 'react'
 
 export class PlayerActions {
-  static playerJoined = defineAction({
-    type: 'hexafield.fps-game.PlayerActions.PLAYER_JOINED',
-    userID: matchesUserID
-  })
+  static playerJoined = defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID()
+      },
+      {
+        $id: 'hexafield.fps-game.PlayerActions.PLAYER_JOINED'
+      }
+    )
+  )
 
-  static playerLeft = defineAction({
-    type: 'hexafield.fps-game.PlayerActions.PLAYER_LEFT',
-    userID: matchesUserID
-  })
+  static playerLeft = defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID()
+      },
+      {
+        $id: 'hexafield.fps-game.PlayerActions.PLAYER_LEFT'
+      }
+    )
+  )
 }
 
 export const GameSystem = defineSystem({

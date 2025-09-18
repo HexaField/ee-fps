@@ -1,4 +1,5 @@
 import {
+  EngineState,
   Entity,
   EntityID,
   EntityTreeComponent,
@@ -15,14 +16,13 @@ import {
 import { respawnAvatar } from '@ir-engine/engine/src/avatar/functions/respawnAvatar'
 import {
   NetworkTopics,
+  Schema,
   UserID,
   defineAction,
   defineState,
   dispatchAction,
   getMutableState,
   getState,
-  matches,
-  matchesUserID,
   none,
   useHookstate,
   useMutableState
@@ -43,31 +43,59 @@ import { PlayerActions } from './GameSystem'
 import { PickupActions } from './PickupSystem'
 
 export const HealthActions = {
-  takeDamage: defineAction({
-    type: 'hexafield.fps-game.HealthActions.TAKE_DAMAGE',
-    userID: matchesUserID,
-    amount: matches.number,
-    $cache: true,
-    $topic: NetworkTopics.world
-  }),
-  die: defineAction({
-    type: 'hexafield.fps-game.HealthActions.DIE',
-    userID: matchesUserID,
-    $cache: true,
-    $topic: NetworkTopics.world
-  }),
-  respawn: defineAction({
-    type: 'hexafield.fps-game.HealthActions.RESPAWN',
-    userID: matchesUserID,
-    $cache: true,
-    $topic: NetworkTopics.world
-  }),
-  immunityTimedout: defineAction({
-    type: 'hexafield.fps-game.HealthActions.IMMUNITY_TIMEDOUT',
-    userID: matchesUserID,
-    $cache: true,
-    $topic: NetworkTopics.world
-  })
+  takeDamage: defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID(),
+        amount: Schema.Number()
+      },
+      {
+        $id: 'hexafield.fps-game.HealthActions.TAKE_DAMAGE',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  ),
+  die: defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID()
+      },
+      {
+        $id: 'hexafield.fps-game.HealthActions.DIE',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  ),
+  respawn: defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID()
+      },
+      {
+        $id: 'hexafield.fps-game.HealthActions.RESPAWN',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  ),
+  immunityTimedout: defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID()
+      },
+      {
+        $id: 'hexafield.fps-game.HealthActions.IMMUNITY_TIMEDOUT',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  )
 }
 
 export const HealthState = defineState({

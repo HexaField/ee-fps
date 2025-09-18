@@ -2,6 +2,7 @@ import {
   defineQuery,
   defineSystem,
   ECSState,
+  EntitySchema,
   EntityUUID,
   getComponent,
   getOptionalComponent,
@@ -15,10 +16,9 @@ import {
   dispatchAction,
   getMutableState,
   getState,
-  matches,
-  matchesUserID,
   NetworkTopics,
   none,
+  Schema,
   useHookstate
 } from '@ir-engine/hyperflux'
 import { PhysicsSystem, TransformComponent } from '@ir-engine/spatial'
@@ -30,30 +30,51 @@ import { ObjectPrefabComponent } from './ObjectSystem'
 import { playSoundEffect } from './SoundEffectSystem'
 
 export const PickupActions = {
-  itemPickup: defineAction({
-    type: 'hexafield.fps-game.PickupActions.ITEM_PICKUP',
-    userID: matchesUserID,
-    pickupType: matches.string,
-    pickupEntityUUID: matches.string as any as EntityUUID,
-    respawnDelay: matches.number,
-    value: matches.number,
-    $cache: true,
-    $topic: NetworkTopics.world
-  }),
+  itemPickup: defineAction(
+    Schema.Object(
+      {
+        userID: Schema.UserID(),
+        pickupType: Schema.String(),
+        pickupEntityUUID: EntitySchema.EntityUUID(),
+        respawnDelay: Schema.Number(),
+        value: Schema.Number()
+      },
+      {
+        $id: 'hexafield.fps-game.PickupActions.ITEM_PICKUP',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  ),
 
-  pickupRespawned: defineAction({
-    type: 'hexafield.fps-game.PickupActions.PICKUP_RESPAWNED',
-    pickupEntityUUID: matches.string as any as EntityUUID,
-    $cache: true,
-    $topic: NetworkTopics.world
-  }),
+  pickupRespawned: defineAction(
+    Schema.Object(
+      {
+        pickupEntityUUID: EntitySchema.EntityUUID()
+      },
+      {
+        $id: 'hexafield.fps-game.PickupActions.PICKUP_RESPAWNED',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  ),
 
-  pickupRemoved: defineAction({
-    type: 'hexafield.fps-game.PickupActions.PICKUP_REMOVED',
-    pickupEntityUUID: matches.string as any as EntityUUID,
-    $cache: true,
-    $topic: NetworkTopics.world
-  })
+  pickupRemoved: defineAction(
+    Schema.Object(
+      {
+        pickupEntityUUID: EntitySchema.EntityUUID()
+      },
+      {
+        $id: 'hexafield.fps-game.PickupActions.PICKUP_REMOVED',
+        metadata: {
+          $topic: NetworkTopics.world
+        }
+      }
+    )
+  )
 }
 
 export type PickupStateType = {

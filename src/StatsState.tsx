@@ -1,3 +1,4 @@
+import { EngineState } from '@ir-engine/ecs'
 import {
   UserID,
   defineState,

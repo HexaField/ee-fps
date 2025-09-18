@@ -1,6 +1,8 @@
 import {
   AnimationSystemGroup,
   createEntity,
+  defineComponent,
+  defineQuery,
   defineSystem,
   ECSState,
   EngineState,
@@ -21,14 +23,13 @@ import { AvatarComponent } from '@ir-engine/engine/src/avatar/components/AvatarC
 import { ParticleSystemComponent } from '@ir-engine/engine/src/scene/components/ParticleSystemComponent'
 
 import { TextComponent } from '@ir-engine/engine/src/scene/components/TextComponent'
-import { defineActionQueue, getState } from '@ir-engine/hyperflux'
+import { defineActionQueue, getState, Schema } from '@ir-engine/hyperflux'
 import { ReferenceSpaceState } from '@ir-engine/spatial'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { SceneComponent } from '@ir-engine/spatial/src/renderer/components/SceneComponents'
 import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { TransformComponent } from '@ir-engine/spatial/src/transform/components/TransformComponent'
-import { Tween } from '@tweenjs/tween.js'
 import {
   AdditiveBlending,
   Color,
@@ -197,6 +198,14 @@ const particleParams = {
   ]
 } as SerializedComponentType<typeof ParticleSystemComponent>
 
+const HitDamageTextComponent = defineComponent({
+  name: 'HitDamageTextComponent',
+  schema: Schema.Object({
+    opacity: Schema.Number(),
+    positionY: Schema.Number()
+  })
+})
+
 /**
  * Creates a stylized damage text effect that fades and moves upward
  * @param damage The damage amount to display
@@ -233,44 +242,48 @@ const createHitDamageText = (damage: number, position: Vector3, color?: Color) =
 
   const duration = 2000
   const moveDistance = 0.5
-  const animationState = {
+  setComponent(entity, HitDamageTextComponent, {
     opacity: 1,
     positionY: position.y
-  }
+  })
 
-  setComponent(
-    entity,
-    TweenComponent,
-    new Tween(animationState)
-      .to(
-        {
-          opacity: 0,
-          positionY: position.y + moveDistance
-        },
-        duration
-      )
-      .easing(Easing.cubic.out)
-      .onUpdate(() => {
-        const transform = getComponent(entity, TransformComponent)
-        transform.position.y = animationState.positionY
-        const viewerEntity = getState(ReferenceSpaceState).viewerEntity
-        const viewerTransform = getComponent(viewerEntity, TransformComponent)
-        transform.rotation.copy(viewerTransform.rotation)
-
-        if (!hasComponent(entity, MeshComponent)) return
-
-        const text = getComponent(entity, MeshComponent) as any
-        text._baseMaterial.transparent = true
-        text._baseMaterial.opacity = animationState.opacity
-      })
-      .start()
-      .onComplete(() => {
-        removeEntity(entity)
-      })
-  )
+  HitDamageTextComponent.setTransition(entity, 'opacity', 0, { easing: Easing.cubic.out, duration })
+  HitDamageTextComponent.setTransition(entity, 'positionY', position.y + moveDistance, {
+    easing: Easing.cubic.out,
+    duration
+  })
 
   return entity
 }
+
+const hitDamageQuery = defineQuery([HitDamageTextComponent])
+
+defineSystem({
+  uuid: 'hexafield.fps-game.HitDamageSystem',
+  insert: { with: AnimationSystemGroup },
+  execute: () => {
+    for (const entity of hitDamageQuery()) {
+      const animationState = getComponent(entity, HitDamageTextComponent)
+
+      if (animationState.opacity <= 0) {
+        removeEntity(entity)
+        continue
+      }
+
+      const transform = getComponent(entity, TransformComponent)
+      transform.position.y = animationState.positionY
+      const viewerEntity = getState(ReferenceSpaceState).viewerEntity
+      const viewerTransform = getComponent(viewerEntity, TransformComponent)
+      transform.rotation.copy(viewerTransform.rotation)
+
+      if (!hasComponent(entity, MeshComponent)) continue
+
+      const text = getComponent(entity, MeshComponent) as any
+      text._baseMaterial.transparent = true
+      text._baseMaterial.opacity = animationState.opacity
+    }
+  }
+})
 
 let hitscanEntityCounter = 0
 const hitscanEntites = [] as Array<[Entity, number]>
