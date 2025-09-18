@@ -1,0 +1,196 @@
+{
+  "public/assets/health.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "health.glb"
+  },
+  "public/assets/invincibility.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "invincibility.glb"
+  },
+  "public/assets/music/track1.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "track1.mp3"
+  },
+  "public/assets/music/track2.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "track2.mp3"
+  },
+  "public/assets/sfx/Death Groan.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Death Groan.mp3"
+  },
+  "public/assets/sfx/Got Hit Grunt.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Got Hit Grunt.mp3"
+  },
+  "public/assets/sfx/Healing Power Up.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Healing Power Up.mp3"
+  },
+  "public/assets/sfx/Killed Enemy.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Killed Enemy.mp3"
+  },
+  "public/assets/sfx/Laser Bolt Shot High.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Laser Bolt Shot High.mp3"
+  },
+  "public/assets/sfx/Laser Bolt Shot Normal.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Laser Bolt Shot Normal.mp3"
+  },
+  "public/assets/sfx/Laser Bolt Shot Semi High.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Laser Bolt Shot Semi High.mp3"
+  },
+  "public/assets/sfx/Laser Bolt Shot Very Low.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Laser Bolt Shot Very Low.mp3"
+  },
+  "public/assets/sfx/Lighting Strike.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Lighting Strike.mp3"
+  },
+  "public/assets/sfx/Lightning Crackle.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Lightning Crackle.mp3"
+  },
+  "public/assets/sfx/Power Up Sound.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Power Up Sound.mp3"
+  },
+  "public/assets/sfx/Respawn.mp3": {
+    "type": "file",
+    "tags": [
+      "Audio"
+    ],
+    "dependencies": [],
+    "name": "Respawn.mp3"
+  },
+  "public/assets/skybox.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "skybox.png"
+  },
+  "public/assets/weapons/assault_rifle.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "assault_rifle.glb"
+  },
+  "public/assets/weapons/heavy_pistol.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "heavy_pistol.glb"
+  },
+  "public/assets/weapons/pulse_rifle.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "pulse_rifle.glb"
+  },
+  "public/assets/weapons/shotgun.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "shotgun.glb"
+  },
+  "public/scenes/New-Scene.gltf": {
+    "type": "scene",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "New-Scene.gltf",
+    "thumbnailKey": ""
+  },
+  "public/scenes/VoidStation.gltf": {
+    "type": "scene",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "VoidStation.gltf",
+    "thumbnailKey": ""
+  },
+  "public/scenes/VoidStationOld.gltf": {
+    "type": "scene",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "VoidStationOld.gltf"
+  }
+}

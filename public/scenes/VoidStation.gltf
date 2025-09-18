@@ -1,0 +1,5545 @@
+{
+  "asset": {
+    "generator": "IREngine.SceneExporter",
+    "version": "2.0"
+  },
+  "nodes": [
+    {
+      "name": "scene preview camera",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2.5,
+        5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "bb362197-f14d-4da7-9c3c-1ed834386423",
+        "EE_scene_preview_camera": {}
+      }
+    },
+    {
+      "name": "Central Spawn Point",
+      "matrix": [
+        -1,
+        1.0106430996148606e-15,
+        -1.224646852585167e-16,
+        0,
+        1.0106430996148606e-15,
+        1,
+        1.2246467991473547e-16,
+        0,
+        1.2246468525851686e-16,
+        1.2246467991473532e-16,
+        -1,
+        0,
+        -2.3268290199118205e-15,
+        -2.3268289183799718e-15,
+        19,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "3e8a430e-9dcf-440e-990c-44ecb8051762",
+        "EE_spawn_point": {
+          "permissionedUsers": []
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "platform",
+      "matrix": [
+        4.6000000000000005,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        6.6000000000000005,
+        0,
+        4.5,
+        0,
+        -26,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "685c48da-e2a0-4a9a-af7c-c5a3c187c99a",
+        "EE_model": {
+          "src": "__$project$__/ir-engine/default-project/assets/platform.glb",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 4095,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "Settings",
+      "extensions": {
+        "EE_uuid": "0d5a20e1-abe2-455e-9963-d5e1e19fca19",
+        "EE_envmapbake": {
+          "bakePosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "bakePositionOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "bakeScale": {
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
+          "bakeType": "Baked",
+          "resolution": 2048,
+          "refreshMode": "OnAwake",
+          "envMapOrigin": "__$project$__/ir-engine/default-project/public/scenes/default.envmap.ktx2",
+          "boxProjection": true
+        },
+        "EE_fog": {
+          "type": "exponential",
+          "color": "#ffdbcf",
+          "density": 0.004999999999999893,
+          "near": 1,
+          "far": 1000,
+          "timeScale": 1,
+          "height": 0.05
+        },
+        "EE_camera_settings": {
+          "fov": 50,
+          "cameraNearClip": 0.1,
+          "cameraFarClip": 200,
+          "projectionType": 1,
+          "minCameraDistance": 0.0009999999999998899,
+          "maxCameraDistance": 200,
+          "startCameraDistance": 3,
+          "cameraMode": "Dynamic",
+          "cameraModeDefault": "ThirdPerson",
+          "minPhi": -70,
+          "maxPhi": 85
+        },
+        "EE_postprocessing": {
+          "enabled": true,
+          "effects": {
+            "SSREffect": {
+              "isActive": false,
+              "distance": 10,
+              "thickness": 10,
+              "autoThickness": false,
+              "maxRoughness": 1,
+              "blend": 0.9,
+              "denoiseIterations": 1,
+              "denoiseKernel": 2,
+              "denoiseDiffuse": 10,
+              "denoiseSpecular": 10,
+              "depthPhi": 2,
+              "normalPhi": 50,
+              "roughnessPhi": 1,
+              "envBlur": 0.5,
+              "importanceSampling": true,
+              "directLightMultiplier": 1,
+              "steps": 20,
+              "refineSteps": 5,
+              "spp": 1,
+              "resolutionScale": 1,
+              "missedRays": false
+            },
+            "DepthOfFieldEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "focusDistance": 0.02,
+              "focalLength": 0.5,
+              "bokehScale": 1
+            },
+            "BloomEffect": {
+              "isActive": true,
+              "blendFunction": 28,
+              "kernelSize": 4,
+              "luminanceThreshold": 0.87,
+              "luminanceSmoothing": 0.16,
+              "intensity": 1.37
+            },
+            "ToneMappingEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "adaptive": true,
+              "resolution": 512,
+              "middleGrey": 0.6,
+              "maxLuminance": 32,
+              "averageLuminance": 1,
+              "adaptationRate": 2
+            },
+            "BrightnessContrastEffect": {
+              "isActive": false,
+              "brightness": 0.05,
+              "contrast": 0.1
+            },
+            "HueSaturationEffect": {
+              "isActive": false,
+              "hue": 0,
+              "saturation": -0.15
+            },
+            "ColorDepthEffect": {
+              "isActive": false,
+              "bits": 16
+            },
+            "LinearTosRGBEffect": {
+              "isActive": false
+            },
+            "SSGIEffect": {
+              "isActive": false,
+              "distance": 10,
+              "thickness": 10,
+              "autoThickness": false,
+              "maxRoughness": 1,
+              "blend": 0.9,
+              "denoiseIterations": 1,
+              "denoiseKernel": 2,
+              "denoiseDiffuse": 10,
+              "denoiseSpecular": 10,
+              "depthPhi": 2,
+              "normalPhi": 50,
+              "roughnessPhi": 1,
+              "envBlur": 0.5,
+              "importanceSampling": true,
+              "directLightMultiplier": 1,
+              "steps": 20,
+              "refineSteps": 5,
+              "spp": 1,
+              "resolutionScale": 1,
+              "missedRays": false
+            },
+            "TRAAEffect": {
+              "isActive": false,
+              "blend": 0.8,
+              "constantBlend": true,
+              "dilation": true,
+              "blockySampling": false,
+              "logTransform": false,
+              "depthDistance": 10,
+              "worldDistance": 5,
+              "neighborhoodClamping": true
+            },
+            "MotionBlurEffect": {
+              "isActive": false,
+              "intensity": 1,
+              "jitter": 1,
+              "samples": 16
+            },
+            "ChromaticAberrationEffect": {
+              "isActive": false,
+              "offset": {
+                "x": 0.001,
+                "y": 0.0005
+              },
+              "radialModulation": false,
+              "modulationOffset": 0.15
+            },
+            "ColorAverageEffect": {
+              "isActive": false,
+              "blendFunction": 23
+            },
+            "DotScreenEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "angle": 1.5707963267948966,
+              "scale": 1
+            },
+            "FXAAEffect": {
+              "isActive": false,
+              "blendFunction": 30
+            },
+            "GlitchEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "delay": {
+                "x": 1.5,
+                "y": 3.5
+              },
+              "duration": {
+                "x": 0.6,
+                "y": 1
+              },
+              "strength": {
+                "x": 0.3,
+                "y": 1
+              },
+              "dtSize": 64,
+              "columns": 0.05,
+              "ratio": 0.85
+            },
+            "GridEffect": {
+              "isActive": false,
+              "blendFunction": 24,
+              "scale": 1,
+              "lineWidth": 0
+            },
+            "LensDistortionEffect": {
+              "isActive": false,
+              "distortion": {
+                "x": 0,
+                "y": 0
+              },
+              "principalPoint": {
+                "x": 0,
+                "y": 0
+              },
+              "focalLength": {
+                "x": 1,
+                "y": 1
+              },
+              "skew": 0
+            },
+            "LUT1DEffect": {
+              "isActive": false,
+              "blendFunction": 30
+            },
+            "LUT3DEffect": {
+              "isActive": false,
+              "blendFunction": 30
+            },
+            "NoiseEffect": {
+              "isActive": false,
+              "blendFunction": 28,
+              "premultiply": false
+            },
+            "PixelationEffect": {
+              "isActive": false,
+              "granularity": 30
+            },
+            "ScanlineEffect": {
+              "isActive": false,
+              "blendFunction": 24,
+              "density": 1.25,
+              "scrollSpeed": 0
+            },
+            "ShockWaveEffect": {
+              "isActive": false,
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "speed": 2,
+              "maxRadius": 1,
+              "waveSize": 0.2,
+              "amplitude": 0.05
+            },
+            "TextureEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "aspectCorrection": false
+            },
+            "TiltShiftEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "offset": 0,
+              "rotation": 0,
+              "focusArea": 0.4,
+              "feather": 0.3,
+              "kernelSize": 2,
+              "resolutionScale": 0.5,
+              "resolutionX": -1,
+              "resolutionY": -1
+            },
+            "VignetteEffect": {
+              "isActive": false,
+              "blendFunction": 23,
+              "technique": 0,
+              "eskil": false,
+              "offset": 0.5,
+              "darkness": 0.5
+            },
+            "SMAAEffect": {
+              "isActive": false,
+              "preset": 1,
+              "edgeDetectionMode": 2,
+              "predicationMode": 0
+            },
+            "SSAOEffect": {
+              "isActive": true,
+              "blendFunction": 21,
+              "distanceScaling": true,
+              "depthAwareUpsampling": true,
+              "samples": 9,
+              "rings": 7,
+              "distanceThreshold": 0.97,
+              "distanceFalloff": 0.03,
+              "rangeThreshold": 0.0005,
+              "rangeFalloff": 0.001,
+              "minRadiusScale": 0.1,
+              "luminanceInfluence": 0.7,
+              "bias": 0.025,
+              "radius": 0.1825,
+              "intensity": 1,
+              "fade": 0.01,
+              "resolutionScale": 1,
+              "resolutionX": -1,
+              "resolutionY": -1,
+              "width": -1,
+              "height": -1,
+              "blur": false,
+              "kernelSize": 1
+            }
+          }
+        },
+        "EE_render_settings": {
+          "primaryLight": "cb045cfd-8daf-4a2b-b764-35625be54a11",
+          "csm": true,
+          "cascades": 2,
+          "toneMapping": 1,
+          "toneMappingExposure": 0.8,
+          "shadowMapType": 2
+        },
+        "EE_scene_settings": {
+          "thumbnailURL": "__$project$__/ir-engine/default-project/public/scenes/default.thumbnail.jpg",
+          "loadingScreenURL": "__$project$__/ir-engine/default-project/public/scenes/default.loadingscreen.ktx2",
+          "primaryColor": "#B3B3B3",
+          "backgroundColor": "#2C2C2C",
+          "alternativeColor": "#A1A1A1",
+          "sceneKillHeight": -10,
+          "spectateEntity": ""
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "Skybox",
+      "extensions": {
+        "EE_uuid": "5517c87e-f989-433e-8a68-cc572effefcd",
+        "EE_visible": true,
+        "EE_skybox": {
+          "backgroundColor": 3026478,
+          "equirectangularPath": "__$project$__/hexafield/ee-fps/public/assets/skybox.png?hash=216316",
+          "cubemapPath": "__$project$__/ir-engine/default-project/assets/skyboxsun25deg/",
+          "backgroundType": 2,
+          "skyboxProps": {
+            "turbidity": 10,
+            "rayleigh": 1,
+            "luminance": 1,
+            "mieCoefficient": 0.004999999999999893,
+            "mieDirectionalG": 0.99,
+            "inclination": 0.10471975511965978,
+            "azimuth": 0.20833333333333334
+          }
+        }
+      }
+    },
+    {
+      "name": "hemisphere light",
+      "extensions": {
+        "EE_uuid": "b9ee0593-0167-497c-ba1f-4406c8345936",
+        "EE_visible": true,
+        "EE_hemisphere_light": {
+          "skyColor": 16766678,
+          "groundColor": 8478791,
+          "intensity": 0.19999999999999996
+        }
+      }
+    },
+    {
+      "name": "directional light",
+      "matrix": [
+        0.8201518642540717,
+        0.2860729507918132,
+        -0.49549287218469207,
+        0,
+        -2.135677357184562e-9,
+        0.866025399522099,
+        0.5000000073825887,
+        0,
+        0.5721458901019657,
+        -0.41007593712366663,
+        0.7102723465203862,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "393dce50-ded6-4b42-a767-27dac4cbadef",
+        "EE_visible": true,
+        "EE_directional_light": {
+          "color": 16777215,
+          "intensity": 0.19999999999999996,
+          "castShadow": true,
+          "shadowBias": -0.00001,
+          "shadowRadius": 1,
+          "cameraFar": 50
+        }
+      }
+    },
+    {
+      "name": "Corridoor Spawn Point",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -34.46458522661894,
+        3.7693399558862852,
+        15.626873093207163,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "7433647d-3a85-49e9-be1f-3c6ee23f94eb",
+        "EE_visible": true,
+        "EE_spawn_point": {
+          "permissionedUsers": []
+        }
+      }
+    },
+    {
+      "name": "Front Spawn Point",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.31200300975344875,
+        -87.94250018687528,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "6430dc33-7ab1-412a-80ff-b75efbf47b03",
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "Health",
+      "matrix": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        -26.972450035254422,
+        0.49119850545568844,
+        -26.68641004609807,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f49635c9-8077-499d-abb5-9afadc93eadc",
+        "EE_visible": true,
+        "IR_object": {
+          "type": "health",
+          "name": "Health",
+          "modelURL": "__$project$__/hexafield/ee-fps/public/assets/health.glb"
+        }
+      }
+    },
+    {
+      "name": "Invincibility",
+      "matrix": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        46.8,
+        0.30000000000000004,
+        0.4,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "b3fe302f-99a5-4477-87db-8119e37e95a6",
+        "EE_visible": true,
+        "IR_object": {
+          "type": "immunity",
+          "name": "Invincibility",
+          "modelURL": "__$project$__/hexafield/ee-fps/public/assets/invincibility.glb"
+        }
+      }
+    },
+    {
+      "name": "Health",
+      "matrix": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        26.200000000000003,
+        0,
+        -87.4,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "72435af3-3851-4013-b697-e582d09680a9",
+        "EE_visible": true,
+        "IR_object": {
+          "type": "health",
+          "name": "Health",
+          "modelURL": "__$project$__/hexafield/ee-fps/public/assets/health.glb"
+        }
+      }
+    },
+    {
+      "name": "Invincibility",
+      "matrix": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        -25.400000000000006,
+        0.30000000000000004,
+        -48.10000000000001,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "4b6e1a93-6d01-4719-aded-32b069f5a978",
+        "EE_visible": true,
+        "IR_object": {
+          "type": "immunity",
+          "name": "Invincibility",
+          "modelURL": "__$project$__/hexafield/ee-fps/public/assets/invincibility.glb"
+        }
+      }
+    },
+    {
+      "name": "Second Floor East Hallway",
+      "extensions": {
+        "EE_uuid": "1899b0b4-5b12-4c67-bd94-cbaf48413804",
+        "EE_visible": true
+      },
+      "children": [
+        14,
+        16
+      ]
+    },
+    {
+      "name": "East Hall Second Floor",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -0.5,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "99511cb6-5b35-426b-bfb8-6f63f6330df9",
+        "EE_visible": true
+      },
+      "children": [
+        15
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        2.4424906541753444e-15,
+        0,
+        -11,
+        0,
+        1.2246467991473532e-16,
+        -1,
+        2.465190328815662e-32,
+        0,
+        -6.1000000000000005,
+        -7.470345474798855e-16,
+        -1.354472090042691e-15,
+        0,
+        36.5,
+        3.4,
+        8.000000000000007,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "c3b7ef70-bb68-4981-a22e-7745edebc5e1",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "East Hall Ramp Access",
+      "extensions": {
+        "EE_uuid": "f6b005b3-be69-45b1-af3d-b6ebb0c2ef3e",
+        "EE_visible": true
+      },
+      "children": [
+        17,
+        18
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5.3,
+        0,
+        40,
+        3.4,
+        -19.2,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "d38614fc-31b9-4eac-a802-1d9552744725",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        1.2246467991473532e-16,
+        0,
+        0,
+        -6.490628035480972e-16,
+        -5.3,
+        0,
+        40,
+        3.4,
+        -19.2,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "59e79804-0248-4be8-b0b8-246e9b6b7390",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "First Floor Hallways",
+      "extensions": {
+        "EE_uuid": "5ba58d7b-50d3-49e7-badd-93936938b9b5",
+        "EE_visible": true
+      },
+      "children": [
+        20,
+        25,
+        34,
+        43
+      ]
+    },
+    {
+      "name": "First Floor South Hallway",
+      "extensions": {
+        "EE_uuid": "9ed2ccb4-e83d-410e-b113-0da088b03305",
+        "EE_visible": true
+      },
+      "children": [
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_6 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        35,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "57078c78-ccb5-4e06-9e93-8e19658fea36",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_6 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        20,
+        0,
+        35,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "30f058a9-660e-47bc-97a4-5643988752bf",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_6 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        -20,
+        0,
+        35,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "368e53b4-141e-4a7d-914a-ba0455042d6b",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "Second Floor East Hallway",
+      "extensions": {
+        "EE_uuid": "943aa343-76fc-4044-8f83-acec918117fc",
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "First Floor East Hallway",
+      "extensions": {
+        "EE_uuid": "8de56688-2eea-4bfa-b7d9-86435cc034b5",
+        "EE_visible": true
+      },
+      "children": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_2",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        40,
+        0,
+        35,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "62d23f24-aded-42dd-80d5-349dce85b75f",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_2.gltf?hash=ce060a",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_2",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        40,
+        0,
+        -34.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "778d2d32-5eb7-4c0a-b9e1-af8a8db14c99",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_2.gltf?hash=ce060a",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Ramp_-_1m_thin",
+      "matrix": [
+        1.942890293094024e-15,
+        0,
+        2.5,
+        0,
+        0,
+        2,
+        0,
+        0,
+        -2,
+        0,
+        1.5543122344752192e-15,
+        0,
+        47.999999999999986,
+        1.68,
+        -29.500000000000018,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "6939b2b1-f565-4dc6-8731-1d91719a432d",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m_thin.gltf?hash=30ca57",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Ramp_-_1m_thin",
+      "matrix": [
+        2.5,
+        0,
+        -8.040613248383183e-16,
+        0,
+        0,
+        2,
+        0,
+        0,
+        8.040613248383183e-16,
+        0,
+        2.5,
+        0,
+        44.99999999999999,
+        0,
+        -37.00000000000001,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "b6c596bf-0c89-4fa9-93a0-ed37592858a4",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m_thin.gltf?hash=30ca57",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        3.3306690738754696e-15,
+        0,
+        -15,
+        0,
+        0,
+        1,
+        0,
+        0,
+        10,
+        0,
+        2.220446049250313e-15,
+        0,
+        40.5,
+        0,
+        7.105427357601002e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "79c7ae6f-8fae-4e14-8d42-f7095ddced28",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "East Hallway Ramps",
+      "extensions": {
+        "EE_uuid": "1cab000e-f9c9-42c3-b994-680ad4678d0a",
+        "EE_visible": true
+      },
+      "children": [
+        32,
+        33
+      ]
+    },
+    {
+      "name": "SF_Ramp_-_1m 1",
+      "matrix": [
+        4.440892098500626e-16,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        -1.5,
+        0,
+        3.3306690738754696e-16,
+        0,
+        46.5,
+        0,
+        -5.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "d6b8cf10-c151-47ee-b366-a54d34652d24",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m.gltf?hash=64631d",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Ramp_-_1m 1",
+      "matrix": [
+        -4.440892098500626e-16,
+        0,
+        -2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1.5,
+        0,
+        -3.3306690738754696e-16,
+        0,
+        46.5,
+        0,
+        6.499999999999993,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f7fd60ae-b2da-4dd7-ab6e-06dc666b620c",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m.gltf?hash=64631d",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "First Floor West Hallway",
+      "extensions": {
+        "EE_uuid": "5693f92f-6411-4c82-842f-b05b0dd9b2de",
+        "EE_visible": true
+      },
+      "children": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "name": "SF_Ramp_-_1m_thin",
+      "matrix": [
+        -5.551115123125783e-16,
+        0,
+        -2.5,
+        0,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        -4.440892098500626e-16,
+        0,
+        -38,
+        1.68,
+        30,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "1d13324a-f81b-4913-96e5-2aa5c1b8c914",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m_thin.gltf?hash=30ca57",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Ramp_-_1m_thin",
+      "matrix": [
+        -2.5,
+        0,
+        -3.061616997868383e-16,
+        0,
+        0,
+        2,
+        0,
+        0,
+        3.061616997868383e-16,
+        0,
+        -2.5,
+        0,
+        -35.00000000000001,
+        0,
+        37.49999999999999,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "5f3a230a-b117-49be-8e11-de46ce4845af",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m_thin.gltf?hash=30ca57",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        2.5,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2.5,
+        0,
+        -35,
+        0,
+        32.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "4024087c-9fb8-48c0-a308-6a8e1a20841d",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "SF_Floor_-_Large_1 1",
+      "matrix": [
+        5.551115123125783e-16,
+        0,
+        -2.5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2.5,
+        0,
+        5.551115123125783e-16,
+        0,
+        -34.99999999999999,
+        0,
+        -35.00000000000001,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "a1564317-c2b8-4899-a3d0-4e4f174ba033",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Large_1.gltf?hash=809efc",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "First Floor West Hallway Floor",
+      "extensions": {
+        "EE_uuid": "6cdb3557-c3d7-465e-be3a-b6da173a96b8",
+        "EE_visible": true
+      },
+      "children": [
+        40,
+        41,
+        42
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        7.105427357601002e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "43cd956b-2b35-48cb-a227-bfbccfbd7e84",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        -19.999999999999996,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "6c4c59a8-43fa-4e69-8bbf-dbb4bff7e0f8",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        20.000000000000007,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "2204446e-2497-45f2-b3b8-aa6345f20750",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "First Floor North",
+      "extensions": {
+        "EE_uuid": "d89b763c-a20e-4bf4-9c4b-e6636ad546e6",
+        "EE_visible": true
+      },
+      "children": [
+        44,
+        45,
+        49
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Large_10",
+      "matrix": [
+        3.3306690738754696e-15,
+        0,
+        15,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -15,
+        0,
+        3.3306690738754696e-15,
+        0,
+        -7.105427357601002e-15,
+        0,
+        -59.99999999999999,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "98ce2b32-4564-49e2-9010-1f761689fc0b",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Large_10.gltf?hash=62756c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "North Windows",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1.5,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "718761d1-767e-4604-b11b-1cfc8389f6c5",
+        "EE_visible": true
+      },
+      "children": [
+        46,
+        47,
+        48
+      ]
+    },
+    {
+      "name": "SF_Window_-_Large",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        -5,
+        0,
+        0,
+        5,
+        0,
+        0,
+        5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -1.5,
+        0,
+        -95.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "3ca8bb1c-8ea6-4c0e-9c7a-73b8592f5f8d",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Window_-_Large.gltf?hash=dd0d91",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Window_-_Large",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        -5,
+        0,
+        0,
+        5,
+        0,
+        0,
+        5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        18.500000000000014,
+        0,
+        -95.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "3a74df6e-965a-48e7-8509-563fbcb12154",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Window_-_Large.gltf?hash=dd0d91",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Window_-_Large",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        -5,
+        0,
+        0,
+        5,
+        0,
+        0,
+        5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -21.499999999999986,
+        0,
+        -95.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "593c1457-ce67-4c54-bf5b-98f2286b3339",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Window_-_Large.gltf?hash=dd0d91",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "Control Room Furniture",
+      "extensions": {
+        "EE_uuid": "4f1078d9-afa2-4de3-9157-4f4d55ea4b5e",
+        "EE_visible": true
+      },
+      "children": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68
+      ]
+    },
+    {
+      "name": "SF_Light_Geo_-_7",
+      "matrix": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        8,
+        0,
+        -48,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f08e4c3c-eacb-40a5-aeec-6ab0807d1a60",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Light_Geo_-_7.gltf?hash=65bfdd",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Light_Geo_-_1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        2.220446049250313e-16,
+        0,
+        -25.500000000000014,
+        0,
+        -54.999999999999986,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "bc9157b5-71a1-407d-ab3a-512e13c7a321",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Light_Geo_-_1.gltf?hash=f88970",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Hero_Pillars_-_Large_1 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        -15.5,
+        0,
+        -42.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "1a4f4ea7-448f-4830-b775-3fcc390db134",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Hero_Pillars_-_Large_1.gltf?hash=93362f",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Hero_Pillars_-_Large_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        16,
+        0,
+        -44.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "669c7bf4-80e2-41af-857b-256e483aa0f3",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Hero_Pillars_-_Large_1.gltf?hash=93362f",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Hero_Cupola_-_Large_1",
+      "matrix": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0.5,
+        0,
+        -53,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "28265d49-dd3c-4e2c-9750-002eb87f171a",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Hero_Cupola_-_Large_1.gltf?hash=e55667",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Pillar_-_1 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        25.5,
+        0,
+        -43,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "969d57be-6cb1-46a3-890a-bf4eb7296164",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Pillar_-_1.gltf?hash=448952",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Pillar_-_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        -25.5,
+        0,
+        -44,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "863fcf41-b642-49b4-b322-a3bf12a07dc4",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Pillar_-_1.gltf?hash=448952",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Terminal_Panel_-_1 1",
+      "matrix": [
+        0.34999999999999976,
+        0,
+        0.6062177826491065,
+        0,
+        0,
+        0.8,
+        0,
+        0,
+        -0.8660254037844378,
+        0,
+        0.4999999999999996,
+        0,
+        -1.689110867544663,
+        1.5,
+        -72.92562584220408,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "51a8be34-75d0-4f87-a8f0-d9609e8b55d1",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Terminal_Panel_-_1.gltf?hash=b71fe5",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Terminal_Panel_-_1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        0.6000000000000001,
+        0,
+        0,
+        -0.7000000000000001,
+        0,
+        1.5543122344752193e-16,
+        0,
+        -9.000000000000014,
+        0,
+        -84.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ea851bde-ed52-45f2-99af-0daacf9fe713",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Terminal_Panel_-_1.gltf?hash=b71fe5",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Pillar_Round_-_Large_1 1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        -20.5,
+        0,
+        -72,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ea331710-0290-4985-af72-92d3a6933ca0",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Pillar_Round_-_Large_1.gltf?hash=049c6b",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Pillar_Round_-_Large_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        22,
+        0,
+        -71,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f70a1e23-1a03-455c-b42e-a4b1e36a8031",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Pillar_Round_-_Large_1.gltf?hash=049c6b",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2 5",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2.220446049250313e-16,
+        0,
+        -8.999999999999986,
+        0,
+        -82,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "6b8ef5fe-98b7-496f-aafe-db280d1b0873",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2 4",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2.220446049250313e-16,
+        0,
+        -4.499999999999986,
+        0,
+        -84,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "12728e62-a0b2-487a-9f71-25cb32b9f0b2",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2 3",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2.220446049250313e-16,
+        0,
+        4.000000000000014,
+        0,
+        -84,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "59a49aeb-c133-45da-99c3-1703deb533f6",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2 2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2.220446049250313e-16,
+        0,
+        8,
+        0,
+        -82.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "4bd692a0-c0fe-4c88-b484-1a1cfd99abd8",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2 1",
+      "matrix": [
+        0.17364817766693086,
+        0,
+        -0.984807753012208,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.984807753012208,
+        0,
+        0.17364817766693086,
+        0,
+        8.72339025754735,
+        0,
+        -76.6496800495474,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "c5147a90-5a21-4467-b619-d2881463bb42",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_2",
+      "matrix": [
+        -0.17364817766693055,
+        0,
+        -0.9848077530122082,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0.9848077530122082,
+        0,
+        -0.17364817766693055,
+        0,
+        -9.035879814008922,
+        0,
+        -75.9924527567494,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "8f80ea93-9333-44b3-afff-57181023c09b",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_2.gltf?hash=4703e0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Chair_-_1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2.220446049250313e-16,
+        0,
+        0,
+        1.5,
+        -71,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "e6c6b867-b8e3-45c0-9400-bd79bf01537b",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Chair_-_1.gltf?hash=ddb20c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Ramp_-_1m",
+      "matrix": [
+        4.440892098500627e-16,
+        0,
+        2.0000000000000004,
+        0,
+        0,
+        2,
+        0,
+        0,
+        -2.0000000000000004,
+        0,
+        4.440892098500627e-16,
+        0,
+        -1.4210854715202004e-14,
+        0,
+        -73.17762978020085,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "dfd65225-5e28-43e1-9148-fcbad9a17077",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ramp_-_1m.gltf?hash=64631d",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "Second Floor West Hallway",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.8,
+        0,
+        0,
+        3.5,
+        1,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "a1c322a2-fae6-4ce4-b1e6-6b429b9b1369",
+        "EE_visible": true
+      },
+      "children": [
+        70
+      ]
+    },
+    {
+      "name": "Second Floor West Hallway",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -3.1086244689504383e-15,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "e01eb8da-ddd3-4cf7-9329-c31db5cd488d",
+        "EE_visible": true
+      },
+      "children": [
+        71,
+        75
+      ]
+    },
+    {
+      "name": "Second Floor West Hallway Floor Top",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1.125,
+        0,
+        0,
+        -0.10000000000000098,
+        -3.75,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "84f22642-4fcc-4777-aaec-83000645bfc4",
+        "EE_visible": true
+      },
+      "children": [
+        72,
+        73,
+        74
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        5.773159728050814e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "57aec34f-8c74-4947-b09c-d998760451cf",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        -20.000000000000004,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f6c8b133-40d0-40f8-9649-9a892e5adc33",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "5e2844d0-0136-4e84-a83f-7d2a84fbe537",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "Second Floor West Hallway Floor Bottom",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        1.2246467991473532e-16,
+        0,
+        0,
+        -1.3777276490407724e-16,
+        -1.125,
+        0,
+        0,
+        -0.10000000000000098,
+        -3.75,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ec417eca-4191-4a36-914f-85cd0aca924b",
+        "EE_visible": true
+      },
+      "children": [
+        76,
+        77,
+        78
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        5.773159728050814e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "d29eaf33-6bc2-41d2-aaf7-7e266570161f",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        -20.000000000000004,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "705a4233-0fe6-4d83-9863-af2528e80f84",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        9.71445146547012e-17,
+        20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "88795088-57fc-4dea-932f-87e6acb3aa38",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "Main Room",
+      "extensions": {
+        "EE_uuid": "c1205ca0-9e99-4f3d-a399-70494e3d65d1",
+        "EE_visible": true
+      },
+      "children": [
+        80,
+        81,
+        83,
+        108
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Large_1",
+      "matrix": [
+        15,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        15,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "e11f5111-8708-4f5e-89a2-f1dd6ae2d2b6",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Large_1.gltf?hash=809efc",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "Main Room Furniture",
+      "extensions": {
+        "EE_uuid": "751f7a99-0b07-4c26-b5bc-006b29bf489e",
+        "EE_visible": true
+      },
+      "children": [
+        82
+      ]
+    },
+    {
+      "name": "SF_Ring_-_Large_1",
+      "matrix": [
+        3,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "1287f76f-209e-4401-a080-ab568d2b9c6a",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Ring_-_Large_1.gltf?hash=c84753",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "Main Room Walls",
+      "extensions": {
+        "EE_uuid": "50b5b328-02a7-4363-8d4d-340a4f0d5022",
+        "EE_visible": true
+      },
+      "children": [
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ]
+    },
+    {
+      "name": "SF_Wall_-_Large_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        -29.5,
+        0,
+        20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "9a4b3c5a-ff41-441a-a319-a56a555fc6b2",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_1.gltf?hash=329d67",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        -29.5,
+        0,
+        -20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ff6e9e8b-113e-4d51-afe7-9875047cb9a2",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_1.gltf?hash=329d67",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Door_-_Large_1",
+      "matrix": [
+        4.440892098500626e-16,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        -2.1,
+        0,
+        4.662936703425658e-16,
+        0,
+        0.5000000000000036,
+        0,
+        29.999999999999996,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "75ee4d0f-e5b1-4dbc-8dd4-8e5283f8e0cc",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Door_-_Large_1.gltf?hash=291e08",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Doorway_-_Large_1",
+      "matrix": [
+        6.661338147750939e-16,
+        0,
+        3,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -3,
+        0,
+        6.661338147750939e-16,
+        0,
+        -0.5000000000000036,
+        0,
+        -29.999999999999996,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f34c003b-b246-4459-bf41-2ed1fad0f60f",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Doorway_-_Large_1.gltf?hash=e95cf8",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Door_-_Large_2",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.8500000000000001,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        30,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "58804048-c1d1-42c8-b1e1-a20d96673a54",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Door_-_Large_2.gltf?hash=12233b",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -3,
+        0,
+        6.661338147750939e-16,
+        0,
+        -12.5,
+        0,
+        -29.999999999999993,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "9bc40abd-50b1-4ec5-8e1c-162265204704",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_2.gltf?hash=9b5f15",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -2.8,
+        0,
+        6.217248937900876e-16,
+        0,
+        -24.000000000000007,
+        0,
+        -29.999999999999993,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ee43d21f-6ce9-46bb-ba5c-de68ec91ed32",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_2.gltf?hash=9b5f15",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -2.9,
+        0,
+        6.439293542825908e-16,
+        0,
+        11.3,
+        0,
+        -29.999999999999993,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "041f2879-4ace-49a0-822e-fe823fa63183",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_2.gltf?hash=9b5f15",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -3.2,
+        0,
+        7.105427357601002e-16,
+        0,
+        23.499999999999993,
+        0,
+        -30.000000000000004,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "9af32b53-0b53-46a0-8bd9-b55fb03a0ccf",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_2.gltf?hash=9b5f15",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Med_1",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        14.1,
+        0,
+        30,
+        0,
+        -16,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f2a7634a-09c0-443b-8b91-a193bf8dc80e",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Med_1.gltf?hash=b61f9d",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "SF_Wall_-_Med_1",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        14.1,
+        0,
+        30,
+        0,
+        16,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "32e68102-5a83-43bd-9254-b591c76bbd9f",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Med_1.gltf?hash=b61f9d",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_4",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        23,
+        0,
+        5.10702591327572e-15,
+        0,
+        3.999999999999993,
+        0,
+        39.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "a0a395f9-dafb-42c7-9167-1c5581b78fce",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_4.gltf?hash=579ca0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_1",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        20,
+        0,
+        50,
+        0,
+        0.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "cc6d84ef-494e-4b27-a5e4-dbf38785e8c4",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_1.gltf?hash=329d67",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_1 1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        40.49999999999999,
+        0,
+        -39.50000000000001,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "a4e61be0-ae6a-4986-bc6d-c705cbb2c4b0",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_1.gltf?hash=329d67",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Curve_Med_1",
+      "matrix": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        27,
+        0,
+        -34,
+        0,
+        -65,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "5128841a-ff0e-4ae2-ab74-7aca03694b7b",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Curve_Med_1.gltf?hash=f1717c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Curve_Med_1",
+      "matrix": [
+        -5,
+        0,
+        6.123233995736766e-16,
+        0,
+        0,
+        5,
+        0,
+        0,
+        -3.3065463576978537e-15,
+        0,
+        -27,
+        0,
+        33.99999999999999,
+        0,
+        -65,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "94526fb8-7df1-4be9-9718-b62b3f7c114b",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Curve_Med_1.gltf?hash=f1717c",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Window_-_Large",
+      "matrix": [
+        1.1102230246251565e-15,
+        5,
+        0,
+        0,
+        -15,
+        3.3306690738754696e-15,
+        0,
+        0,
+        0,
+        0,
+        12.7,
+        0,
+        29.5,
+        24.499999999999975,
+        -65,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "14226a30-54e4-48c7-a5ca-4212defd1ff1",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Window_-_Large.gltf?hash=dd0d91",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_1 2",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        18,
+        0,
+        -40,
+        0,
+        3.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "bf6eb74c-cc39-4163-8574-32898748052a",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_1.gltf?hash=329d67",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_4 1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -6.5,
+        0,
+        1.4432899320127035e-15,
+        0,
+        -16.499999999999996,
+        0,
+        29.999999999999996,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "f9ba9ee1-3aa9-416a-9368-9e61e0e536c4",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_4.gltf?hash=579ca0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_4 1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        3,
+        0,
+        0,
+        -6.5,
+        0,
+        1.4432899320127035e-15,
+        0,
+        17.500000000000004,
+        0,
+        29.99999999999999,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "c4be7afb-03da-4c5e-9a62-99ffb9353235",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_4.gltf?hash=579ca0",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Medium_2",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        -1,
+        0,
+        2,
+        4.440892098500626e-16,
+        4.440892098500626e-16,
+        0,
+        4.440892098500626e-16,
+        -2,
+        0,
+        0,
+        -3.5,
+        10.000000000000004,
+        30,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "86923fe7-1ed9-4667-9028-544d19a4c481",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Medium_2.gltf?hash=b694df",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Medium_1",
+      "matrix": [
+        2.220446049250313e-16,
+        0,
+        1,
+        0,
+        0,
+        5,
+        0,
+        0,
+        -5.3,
+        0,
+        1.1768364061026659e-15,
+        0,
+        -34.50000000000001,
+        0,
+        -39.00000000000001,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "acc229ec-58b4-4667-a1cd-1290db7c8631",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Medium_1.gltf?hash=fc2092",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Wall_-_Large_3",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        -40,
+        0,
+        -35.5,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "9059b101-9c1e-43af-994c-5ea7c7e6dd26",
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Wall_-_Large_3.gltf?hash=393af7",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_visible": true,
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Window_-_Large",
+      "matrix": [
+        1.1102230246251565e-15,
+        5,
+        0,
+        0,
+        -15,
+        3.3306690738754696e-15,
+        0,
+        0,
+        0,
+        0,
+        15,
+        0,
+        29.999999999999996,
+        16.999999999999996,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "d755f4da-b010-4cf4-8ad3-f1d1c73289f2",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Window_-_Large.gltf?hash=dd0d91",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "Main Room Balconies",
+      "extensions": {
+        "EE_uuid": "f5bcbd81-6915-40cc-a7fe-510cc371dd05",
+        "EE_visible": true
+      },
+      "children": [
+        109,
+        112
+      ]
+    },
+    {
+      "name": "Main Room East Balcony",
+      "matrix": [
+        -0.5,
+        0,
+        -6.123233995736767e-17,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1.347111479062089e-16,
+        0,
+        -1.1,
+        0,
+        45,
+        0,
+        3.0000000000000053,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "774477e9-407f-4a40-8f5d-32a90c7bed6b",
+        "EE_visible": true
+      },
+      "children": [
+        110
+      ]
+    },
+    {
+      "name": "East Balcony",
+      "matrix": [
+        -1.2799999999999998,
+        0,
+        1.5675479029086136e-16,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -8.906522175617122e-17,
+        0,
+        -0.7272727272727271,
+        0,
+        84.4,
+        0,
+        8,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "dd856780-e8f3-4abc-bf58-36d0497ab8e0",
+        "EE_visible": true
+      },
+      "children": [
+        111
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_6",
+      "matrix": [
+        2.4424906541753444e-15,
+        8.135128085091682e-31,
+        -11,
+        0,
+        1.2246467991473522e-16,
+        -0.9999999999999994,
+        -4.9303806576313216e-32,
+        0,
+        -6.1000000000000005,
+        -7.470345474798851e-16,
+        -1.3544720900426913e-15,
+        0,
+        36.499999999999915,
+        3.3999999999999977,
+        8.000000000000007,
+        0.9999999999999999
+      ],
+      "extensions": {
+        "EE_uuid": "a5265d82-c800-481b-9780-b4611d421af4",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_6.gltf?hash=aa4e0c",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "Main Room West Balcony",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0.8,
+        0,
+        10,
+        3.5,
+        3,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "b76189e1-9b52-4700-89e2-b636ce1bf3e1",
+        "EE_visible": true
+      },
+      "children": [
+        113,
+        117
+      ]
+    },
+    {
+      "name": "Second Floor West Hallway Floor Top",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1.125,
+        0,
+        0,
+        -0.1000000000000032,
+        -3.75,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "1fa61d98-d1d1-4755-b29d-4dd5449e6d9f",
+        "EE_visible": true
+      },
+      "children": [
+        114,
+        115,
+        116
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        5.773159728050814e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "e02805d3-90ac-4ea5-9949-74c728432e9f",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        -20.000000000000004,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "84e461fd-aa6f-43af-8cd0-b88b9050275f",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "3250ba31-86a1-4f31-a0cd-77670c17e88f",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": true,
+          "shape": "mesh"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        },
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
+      }
+    },
+    {
+      "name": "Second Floor West Hallway Floor Bottom",
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        1.2246467991473532e-16,
+        0,
+        0,
+        -1.3777276490407724e-16,
+        -1.125,
+        0,
+        0,
+        -0.1000000000000032,
+        -3.75,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "6549d81e-1278-451d-997e-5ec47d732206",
+        "EE_visible": true
+      },
+      "children": [
+        118,
+        119,
+        120
+      ]
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        5.773159728050814e-15,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "22bf5c37-a1fb-45ba-96b0-8fa671b130b3",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        0,
+        -20.000000000000004,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "4fac8a06-9ec8-495a-814d-9678a4a6ddf0",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    },
+    {
+      "name": "SF_Floor_-_Med_5",
+      "matrix": [
+        1.1102230246251565e-15,
+        0,
+        5,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -5,
+        0,
+        1.1102230246251565e-15,
+        0,
+        -35,
+        9.71445146547012e-17,
+        20,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": "ad09e7ad-ddbe-4ce9-a70e-5ca42e90bfce",
+        "EE_visible": true,
+        "EE_model": {
+          "src": "__$project$__/theinfinitereality/irpro-kits-scifi/assets/SF_Floor_-_Med_5.gltf?hash=10e3aa",
+          "cameraOcclusion": true,
+          "applyColliders": false,
+          "shape": "box"
+        },
+        "EE_shadow": {
+          "cast": true,
+          "receive": true
+        },
+        "EE_envmap": {
+          "type": "Skybox",
+          "envMapSourceColor": 8421631,
+          "envMapSourceURL": "",
+          "envMapCubemapURL": "",
+          "envMapSourceEntityUUID": "",
+          "envMapIntensity": 1
+        }
+      }
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        19,
+        69,
+        79
+      ]
+    }
+  ],
+  "extensionsUsed": [
+    "EE_uuid",
+    "EE_scene_preview_camera",
+    "EE_spawn_point",
+    "EE_visible",
+    "EE_model",
+    "EE_shadow",
+    "EE_envmap",
+    "EE_envmapbake",
+    "EE_fog",
+    "EE_camera_settings",
+    "EE_postprocessing",
+    "EE_render_settings",
+    "EE_scene_settings",
+    "EE_skybox",
+    "EE_hemisphere_light",
+    "EE_directional_light",
+    "IR_object",
+    "EE_rigidbody",
+    "IR_scene_delta"
+  ],
+  "extensions": {
+    "IR_scene_delta": {
+      "a4e61be0-ae6a-4986-bc6d-c705cbb2c4b0": {
+        "0": {
+          "EE_transform": {
+            "scale": {
+              "x": 1,
+              "y": 1.5,
+              "z": 1
+            },
+            "position": {
+              "x": 0,
+              "y": 3,
+              "z": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}
