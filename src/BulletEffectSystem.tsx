@@ -200,6 +200,7 @@ const particleParams = {
 
 const HitDamageTextComponent = defineComponent({
   name: 'HitDamageTextComponent',
+  jsonID: 'EE_hit_damage_text',
   schema: Schema.Object({
     opacity: Schema.Number(),
     positionY: Schema.Number()
