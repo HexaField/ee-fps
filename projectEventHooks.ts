@@ -6,11 +6,11 @@ import manifestJson from './manifest.json'
 const config = {
   onInstall: async (app: Application) => {
     await createLocations(app, manifestJson.name, {
-      'infinite-shootout': 'public/scenes/VoidStation.gltf'
+      'fps': 'public/scenes/training-ground.gltf'
     })
     await app
       .service('route-activate')
-      .create({ project: manifestJson.name, route: '/infinite-shootout', activate: true })
+      .create({ project: manifestJson.name, route: '/fps', activate: true })
   }
 } as ProjectEventHooks
 

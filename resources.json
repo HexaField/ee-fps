@@ -1,11 +1,24 @@
 {
+  "assets/low-poly_fps_map.glb": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "low-poly_fps_map.glb"
+  },
   "public/assets/health.glb": {
     "type": "file",
     "tags": [
       "Model"
     ],
     "dependencies": [],
-    "name": "health.glb"
+    "name": "health.glb",
+    "thumbnailKey": "projects/hexafield/ee-fps/public/thumbnails/e5af337529d8e4d7257db7d15e67b33febe3143e14557d.png",
+    "thumbnailMode": "automatic",
+    "width": 0.45,
+    "height": 1.9,
+    "depth": 0.44
   },
   "public/assets/invincibility.glb": {
     "type": "file",
@@ -13,7 +26,12 @@
       "Model"
     ],
     "dependencies": [],
-    "name": "invincibility.glb"
+    "name": "invincibility.glb",
+    "thumbnailKey": "projects/hexafield/ee-fps/public/thumbnails/ca37e6231bfa157c4fa3253575b1854b826095495448e4.png",
+    "thumbnailMode": "automatic",
+    "width": 1.68,
+    "height": 1.89,
+    "depth": 0.48
   },
   "public/assets/music/track1.mp3": {
     "type": "file",
@@ -133,7 +151,9 @@
       "Image"
     ],
     "dependencies": [],
-    "name": "skybox.png"
+    "name": "skybox.png",
+    "thumbnailKey": "projects/hexafield/ee-fps/public/thumbnails/1d6f5a9b719c2646d9e0cb4003a5e3ef3690d3605504c1.png",
+    "thumbnailMode": "automatic"
   },
   "public/assets/weapons/assault_rifle.glb": {
     "type": "file",
@@ -167,30 +187,14 @@
     "dependencies": [],
     "name": "shotgun.glb"
   },
-  "public/scenes/New-Scene.gltf": {
+  "public/scenes/training-ground.gltf": {
     "type": "scene",
     "tags": [
       "Model"
     ],
     "dependencies": [],
-    "name": "New-Scene.gltf",
-    "thumbnailKey": ""
-  },
-  "public/scenes/VoidStation.gltf": {
-    "type": "scene",
-    "tags": [
-      "Model"
-    ],
-    "dependencies": [],
-    "name": "VoidStation.gltf",
-    "thumbnailKey": ""
-  },
-  "public/scenes/VoidStationOld.gltf": {
-    "type": "scene",
-    "tags": [
-      "Model"
-    ],
-    "dependencies": [],
-    "name": "VoidStationOld.gltf"
+    "name": "training-ground.gltf",
+    "thumbnailKey": "projects/hexafield/ee-fps/public/thumbnails/training-ground.thumbnail.jpg",
+    "thumbnailMode": "custom"
   }
 }

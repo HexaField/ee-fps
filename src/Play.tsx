@@ -1,6 +1,7 @@
 import '@ir-engine/client-core/src/world/LocationModule'
 import '@ir-engine/client/src/engine'
 
+import { useThemeProvider } from '@ir-engine/client-core/src/common/services/ThemeService'
 import Debug from '@ir-engine/client-core/src/components/Debug'
 import { useNetwork } from '@ir-engine/client-core/src/components/World/EngineHooks'
 import { useLoadLocation } from '@ir-engine/client-core/src/components/World/LoadLocationScene'
@@ -25,10 +26,12 @@ import './WeaponSystem'
 export default function Play() {
   const ref = useRef<HTMLElement>(document.body)
 
+  useThemeProvider()
+
   useSpatialEngine()
   useEngineCanvas(ref)
   useNetwork({ online: true })
-  useLoadLocation({ locationName: 'infinite-shootout' })
+  useLoadLocation({ locationName: 'fps' })
 
   return (
     <>

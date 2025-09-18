@@ -5,7 +5,7 @@ const config: ProjectConfigInterface = {
   thumbnail: '/static/etherealengine_thumbnail.jpg',
   routes: {
     '/fps': {
-      component: () => import('./src/Play'),
+      component: () => import('./src/main'),
       props: {
         exact: true
       }

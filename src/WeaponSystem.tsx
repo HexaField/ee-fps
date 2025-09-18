@@ -40,6 +40,7 @@ import { ReferenceSpaceState, TransformComponent } from '@ir-engine/spatial'
 
 import { AvatarMovementSettingsState } from '@ir-engine/engine/src/avatar/state/AvatarMovementSettingsState'
 import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
+import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { CameraComponent } from '@ir-engine/spatial/src/camera/components/CameraComponent'
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
 import { TargetCameraRotationComponent } from '@ir-engine/spatial/src/camera/components/TargetCameraRotationComponent'
@@ -167,6 +168,7 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
       }
     })
     setComponent(entity, NameComponent, 'Weapon Model ' + props.userID)
+    setComponent(entity, ShadowComponent)
     weaponModelEntity.set(entity)
     return () => {
       removeEntity(entity)
@@ -503,9 +505,9 @@ export const WeaponSystem = defineSystem({
 
     useEffect(() => {
       if (avatarMovementSettings.runSpeed.value === 10) return
-      avatarMovementSettings.jumpHeight.set(3)
-      avatarMovementSettings.runSpeed.set(10)
-      avatarMovementSettings.walkSpeed.set(6)
+      avatarMovementSettings.jumpHeight.set(1)
+      avatarMovementSettings.runSpeed.set(5)
+      avatarMovementSettings.walkSpeed.set(3)
     }, [avatarMovementSettings.runSpeed.value])
 
     const viewerEntity = useMutableState(ReferenceSpaceState).viewerEntity.value
