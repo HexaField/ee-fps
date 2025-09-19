@@ -47,17 +47,17 @@
           "isAvatarVisible": true,
           "followCameraScrollSensitivity": 1,
           "canCameraFirstPerson": true,
-          "canCameraThirdPerson": true,
-          "canCameraTopDown": true,
-          "isFistPersonFreeCamera": true,
-          "isThirdPersonFreeCamera": true,
+          "canCameraThirdPerson": false,
+          "canCameraTopDown": false,
+          "isFirstPersonFreeCamera": false,
+          "isThirdPersonFreeCamera": false,
           "isTopDownFreeCamera": false,
           "firstPersonCameraLimits": 360,
           "thirdPersonCameraLimits": 360,
           "topDownCameraLimits": 360,
-          "isFirstPersonCameraReset": true,
-          "isThirdPersonCameraReset": true,
-          "isTopDownCameraReset": true,
+          "isFirstPersonCameraReset": false,
+          "isThirdPersonCameraReset": false,
+          "isTopDownCameraReset": false,
           "thirdPersonMinDistance": 1.5,
           "thirdPersonMaxDistance": 50,
           "thirdPersonDefaultDistance": 3,
@@ -360,24 +360,7 @@
     },
     {
       "name": "scene preview camera",
-      "matrix": [
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        2.5,
-        5,
-        1
-      ],
+      "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 2.5, 5, 1],
       "extensions": {
         "EE_uuid": {
           "entityID": "bb362197-f14d-4da7-9c3c-1ed834386423"
@@ -413,22 +396,8 @@
     {
       "name": "spawn point",
       "matrix": [
-        -1,
-        1.0106430996148606e-15,
-        -1.224646852585167e-16,
-        0,
-        1.0106430996148606e-15,
-        1,
-        1.2246467991473547e-16,
-        0,
-        1.2246468525851686e-16,
-        1.2246467991473532e-16,
-        -1,
-        0,
-        0,
-        0,
-        0,
-        1
+        -1, 1.0106430996148606e-15, -1.224646852585167e-16, 0, 1.0106430996148606e-15, 1, 1.2246467991473547e-16, 0,
+        1.2246468525851686e-16, 1.2246467991473532e-16, -1, 0, 0, 0, 0, 1
       ],
       "extensions": {
         "EE_uuid": {
@@ -443,22 +412,8 @@
     {
       "name": "directional light",
       "matrix": [
-        0.8201518642540717,
-        0.2860729507918132,
-        -0.49549287218469207,
-        0,
-        -2.135677357184562e-9,
-        0.866025399522099,
-        0.5000000073825887,
-        0,
-        0.5721458901019657,
-        -0.41007593712366663,
-        0.7102723465203862,
-        0,
-        0,
-        0,
-        0,
-        1
+        0.8201518642540717, 0.2860729507918132, -0.49549287218469207, 0, -2.135677357184562e-9, 0.866025399522099,
+        0.5000000073825887, 0, 0.5721458901019657, -0.41007593712366663, 0.7102723465203862, 0, 0, 0, 0, 1
       ],
       "extensions": {
         "EE_uuid": {
@@ -490,24 +445,7 @@
     },
     {
       "name": "low-poly_fps_map",
-      "matrix": [
-        0.5,
-        0,
-        0,
-        0,
-        0,
-        0.5,
-        0,
-        0,
-        0,
-        0,
-        0.5,
-        0,
-        0,
-        0,
-        0,
-        1
-      ],
+      "matrix": [0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1],
       "extensions": {
         "EE_uuid": {
           "entityID": "4c1102a7-21e5-4bf6-affe-f9e3276dcfae"
@@ -535,11 +473,7 @@
           "type": "fixed",
           "ccd": false,
           "allowRolling": true,
-          "enabledRotations": [
-            true,
-            true,
-            true
-          ],
+          "enabledRotations": [true, true, true],
           "canSleep": true,
           "gravityScale": 1
         }
@@ -560,11 +494,7 @@
           "type": "fixed",
           "ccd": false,
           "allowRolling": true,
-          "enabledRotations": [
-            true,
-            true,
-            true
-          ],
+          "enabledRotations": [true, true, true],
           "canSleep": true,
           "gravityScale": 1
         },
@@ -598,24 +528,7 @@
     },
     {
       "name": "Health",
-      "matrix": [
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        26.996234506190824,
-        0,
-        -14.582222317515757,
-        1
-      ],
+      "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 26.996234506190824, 0, -14.582222317515757, 1],
       "extensions": {
         "EE_uuid": {
           "entityID": "55d04f2d-6d20-4a51-a332-66232e354ccb"
@@ -633,17 +546,7 @@
   "scene": 0,
   "scenes": [
     {
-      "nodes": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-      ]
+      "nodes": [0, 1, 2, 3, 4, 5, 6, 7, 8]
     }
   ],
   "extensionsUsed": [
