@@ -378,7 +378,10 @@ const updateIKTargets = () => {
   if (!weaponState) return
 
   const weaponModelEntity = UUIDComponent.getEntityByUUID(
-    ('Weapon Model ' + getState(EngineState).userID) as EntityUUID
+    UUIDComponent.join({
+      entitySourceID: getState(EngineState).userID as any as SourceID,
+      entityID: 'weapon' as EntityID
+    })
   )
   if (!weaponModelEntity) return
 
