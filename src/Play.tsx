@@ -9,19 +9,17 @@ import { useSpatialEngine } from '@ir-engine/spatial/src/initializeEngine'
 import { useEngineCanvas } from '@ir-engine/spatial/src/renderer/functions/useEngineCanvas'
 import React, { useRef } from 'react'
 
+import './Game'
+
 import './BulletEffectSystem'
 import './GameChatSystem'
-import GameChatUI from './GameChatUI'
-import './GameSystem'
-import './HealthSystem'
 import './MusicSystem'
-import './ObjectSystem'
 import './PickupEffectSystem'
-import './PickupSystem'
 import './SoundEffectSystem'
 import './StatsState'
+
+import GameChatUI from './GameChatUI'
 import { StatsUI } from './StatsState'
-import './WeaponSystem'
 
 export default function Play() {
   const ref = useRef<HTMLElement>(document.body)

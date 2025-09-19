@@ -322,6 +322,8 @@ const execute = () => {
     if (!avatarEntity) continue
     const weaponConfig = WeaponConfig[action.weapon]
 
+    const damage = weaponConfig.damage
+
     const position = getComponent(avatarEntity, TransformComponent).position
     playSoundEffect(weaponConfig.sound, {
       position: userID === getState(EngineState).userID ? undefined : position,
@@ -414,9 +416,11 @@ const execute = () => {
 
       const color = new Color(weaponConfig.color)
 
+      const selfAvatarEntity = AvatarComponent.getSelfAvatarEntity()
+
       // Create damage text effect if it's a player hit
-      if (hit.isPlayer && hit.hitEntityUUID !== getState(EngineState).userID + 'avatar' && hit.damage) {
-        createHitDamageText(hit.damage, hitPosition, color)
+      if (hit.isPlayer && hitEntity !== selfAvatarEntity && damage) {
+        createHitDamageText(damage, hitPosition, color)
       }
 
       const particleParamsClone = JSON.parse(JSON.stringify(particleParams))

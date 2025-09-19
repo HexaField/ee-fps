@@ -15,6 +15,7 @@ import {
 } from '@ir-engine/ecs'
 import { respawnAvatar } from '@ir-engine/engine/src/avatar/functions/respawnAvatar'
 import {
+  NetworkState,
   NetworkTopics,
   Schema,
   UserID,
@@ -23,6 +24,7 @@ import {
   dispatchAction,
   getMutableState,
   getState,
+  isClient,
   none,
   useHookstate,
   useMutableState
@@ -98,6 +100,22 @@ export const HealthActions = {
   )
 }
 
+/**
+ * Validate that the action is being performed by the host peer on server-authoritative mode
+ */
+const validateHealthChange = (action: {
+  $network: string | undefined
+  $peer: string
+  userID: string
+  $user: string
+}) => {
+  // if no network, we dispatched it, thus we can assume it's valid
+  if (!action.$network) return true
+  const network = getState(NetworkState).networks[action.$network]
+  if (!network) return false
+  return network.hostPeerID ? action.$peer === network.hostPeerID : true
+}
+
 export const HealthState = defineState({
   name: 'hexafield.fps-game.HealthState',
   initial: {} as Record<UserID, { lives: number; health: number; immunity: { active: boolean; endTime: number } }>,
@@ -113,19 +131,23 @@ export const HealthState = defineState({
         }
       })
     }),
-    onAffectHealth: HealthActions.takeDamage.receive((action) => {
-      if (!getState(HealthState)[action.userID]) return
+    onAffectHealth: HealthActions.takeDamage
+      .receive((action) => {
+        if (!getState(HealthState)[action.userID]) return
 
-      const userState = getState(HealthState)[action.userID]
-      if (userState.immunity.active && action.amount < 0) {
-        return
-      }
+        const userState = getState(HealthState)[action.userID]
+        if (userState.immunity.active && action.amount < 0) {
+          return
+        }
 
-      getMutableState(HealthState)[action.userID].health.set((current) => Math.min(current + action.amount, 100))
-    }),
-    onDie: HealthActions.die.receive((action) => {
-      getMutableState(HealthState)[action.userID].health.set(0)
-    }),
+        getMutableState(HealthState)[action.userID].health.set((current) => Math.min(current + action.amount, 100))
+      })
+      .validate(validateHealthChange),
+    onDie: HealthActions.die
+      .receive((action) => {
+        getMutableState(HealthState)[action.userID].health.set(0)
+      })
+      .validate(validateHealthChange),
     onRespawn: HealthActions.respawn.receive((action) => {
       getMutableState(HealthState)[action.userID].health.set(100)
     }),
@@ -206,7 +228,7 @@ const UserHealthReactor = (props: { userID: UserID }) => {
     }
   }, [userEntity, userHealthState.health.value])
 
-  if (!userEntity || props.userID === getState(EngineState).userID) return null
+  if (!isClient || !userEntity || props.userID === getState(EngineState).userID) return null
 
   return <UserHealthBarUI userID={props.userID} userEntity={userEntity} />
 }

@@ -15,6 +15,7 @@ import {
   defineSystem,
   getComponent,
   hasComponent,
+  isAuthorityOverEntity,
   removeComponent,
   removeEntity,
   setComponent,
@@ -29,6 +30,7 @@ import {
   Schema,
   UserID,
   defineAction,
+  defineActionQueue,
   defineState,
   dispatchAction,
   getMutableState,
@@ -45,8 +47,8 @@ import { CameraComponent } from '@ir-engine/spatial/src/camera/components/Camera
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
 import { TargetCameraRotationComponent } from '@ir-engine/spatial/src/camera/components/TargetCameraRotationComponent'
 import { FollowCameraMode } from '@ir-engine/spatial/src/camera/types/FollowCameraMode'
-import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { mergeBufferGeometries } from '@ir-engine/spatial/src/common/classes/BufferGeometryUtils'
+import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { InputComponent } from '@ir-engine/spatial/src/input/components/InputComponent'
 import { Physics, RaycastArgs } from '@ir-engine/spatial/src/physics/classes/Physics'
 import { CollisionGroups, DefaultCollisionMask } from '@ir-engine/spatial/src/physics/enums/CollisionGroups'
@@ -69,15 +71,17 @@ import {
   Vector2,
   Vector3
 } from 'three'
-import { HealthActions, HealthState } from './HealthSystem'
 import { WeaponConfig, Weapons } from './constants'
+import { HealthActions, HealthState } from './HealthSystem'
+
+const WeaponSchema = Schema.LiteralUnion(['assault_rifle', 'pulse_rifle', 'heavy_pistol', 'shotgun'] as const)
 
 export const WeaponActions = {
   changeWeapon: defineAction(
     Schema.Object(
       {
         userID: Schema.UserID(),
-        weapon: Schema.LiteralUnion(['assault_rifle', 'pulse_rifle', 'heavy_pistol', 'shotgun'] as const),
+        weapon: WeaponSchema,
         handedness: Schema.LiteralUnion(['left', 'right'] as const)
       },
       {
@@ -91,6 +95,7 @@ export const WeaponActions = {
   fireWeapon: defineAction(
     Schema.Object(
       {
+        weapon: WeaponSchema,
         hits: Schema.Array(
           Schema.Object({
             position: Schema.Tuple([Schema.Number(), Schema.Number(), Schema.Number()]),
@@ -99,11 +104,10 @@ export const WeaponActions = {
             isPlayer: Schema.Optional(Schema.Bool()),
             damage: Schema.Optional(Schema.Number())
           })
-        ),
-        weapon: Schema.String()
+        )
       },
       {
-        $id: 'hexafield.fps-game.WeaponActions.FIRE_WEAPON',
+        $id: 'hexafield.fps-game.WeaponActions.HIT',
         metadata: {
           $topic: NetworkTopics.world
         }
@@ -326,29 +330,13 @@ const onPrimaryClick = () => {
     const hitEntity = cameraRaycastHit.entity
     const isAvatarEntity = hasComponent(hitEntity, AvatarRigComponent)
 
-    if (hitEntity !== AvatarComponent.getSelfAvatarEntity()) {
+    if (hitEntity !== selfAvatarEntity) {
       entityHits.push({
         position: new Vector3().copy(cameraRaycastHit.position as Vector3),
         normal: new Vector3().copy(cameraRaycastHit.normal as Vector3),
         hitEntityUUID: UUIDComponent.get(hitEntity),
         isPlayer: isAvatarEntity
       })
-
-      const playerIsAlive =
-        isAvatarEntity && getState(HealthState)?.[getComponent(hitEntity, NetworkObjectComponent).ownerId]?.health > 0
-      if (playerIsAlive && isAvatarEntity) {
-        const targetUserID = getComponent(hitEntity, NetworkObjectComponent).ownerId
-
-        const amount = weaponConfig.damage
-        const currentHealth = getState(HealthState)[targetUserID].health
-
-        /** @todo refactor this such that health state uses the new weapon hit action */
-        if (currentHealth - amount <= 0) {
-          dispatchAction(HealthActions.die({ userID: targetUserID }))
-        } else {
-          dispatchAction(HealthActions.takeDamage({ userID: targetUserID, amount: -amount }))
-        }
-      }
     }
   }
 
@@ -452,20 +440,53 @@ const changeWeapon = (weapon: Weapons) => {
   )
 }
 
+const processWeaponFireAction = (action: typeof WeaponActions.fireWeapon._TYPE) => {
+  const avatarEntity = AvatarComponent.getUserAvatarEntity(action.$user)
+  if (!isAuthorityOverEntity(avatarEntity)) return
+
+  const weaponConfig = WeaponConfig[action.weapon]
+
+  for (const ray of action.hits) {
+    if (!ray.hitEntityUUID) continue
+    const hitEntity = UUIDComponent.getEntityByUUID(ray.hitEntityUUID)
+    if (!avatarEntity || !hasComponent(hitEntity, NetworkObjectComponent)) continue
+
+    const playerIsAlive = getState(HealthState)?.[getComponent(hitEntity, NetworkObjectComponent).ownerId]?.health > 0
+    if (playerIsAlive) {
+      const targetUserID = getComponent(hitEntity, NetworkObjectComponent).ownerId
+
+      const amount = weaponConfig.damage
+      const currentHealth = getState(HealthState)[targetUserID].health
+
+      if (currentHealth - amount <= 0) {
+        dispatchAction(HealthActions.die({ userID: targetUserID }))
+      } else {
+        dispatchAction(HealthActions.takeDamage({ userID: targetUserID, amount: -amount }))
+      }
+    }
+  }
+}
+
 const weaponKeys = Object.keys(WeaponConfig) as Weapons[]
+
+const weaponFireQueue = defineActionQueue(WeaponActions.fireWeapon)
 
 const execute = () => {
   const viewerEntity = getState(ReferenceSpaceState).viewerEntity
 
-  const buttons = InputComponent.getMergedButtons(viewerEntity)
-  if (buttons.PrimaryClick?.pressed) onPrimaryClick()
-  if (buttons.KeyZ?.down) swapHands()
-  if (buttons.Digit1?.down) changeWeapon(weaponKeys[0])
-  if (buttons.Digit2?.down) changeWeapon(weaponKeys[1])
-  if (buttons.Digit3?.down) changeWeapon(weaponKeys[2])
-  if (buttons.Digit4?.down) changeWeapon(weaponKeys[3])
+  if (viewerEntity) {
+    const buttons = InputComponent.getMergedButtons(viewerEntity)
+    if (buttons.PrimaryClick?.pressed) onPrimaryClick()
+    if (buttons.KeyZ?.down) swapHands()
+    if (buttons.Digit1?.down) changeWeapon(weaponKeys[0])
+    if (buttons.Digit2?.down) changeWeapon(weaponKeys[1])
+    if (buttons.Digit3?.down) changeWeapon(weaponKeys[2])
+    if (buttons.Digit4?.down) changeWeapon(weaponKeys[3])
 
-  // updateIKTargets()
+    // updateIKTargets()
+  }
+
+  for (const action of weaponFireQueue()) processWeaponFireAction(action)
 }
 
 const WeaponReactor = (props: { viewerEntity: Entity }) => {

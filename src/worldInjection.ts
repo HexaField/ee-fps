@@ -1,13 +1,8 @@
-import { ComponentEditorsState } from '@ir-engine/editor/src/services/ComponentEditors'
-import { ComponentShelfCategoriesState } from '@ir-engine/editor/src/services/ComponentShelfCategoriesState'
-import { getMutableState } from '@ir-engine/hyperflux'
-import { ObjectPrefabComponent } from './ObjectSystem'
-import ItemPrefabComponentEditor from './editor/ItemEditor'
+import { isClient } from '@ir-engine/hyperflux'
+import './Game'
 
 export default async function () {
-  getMutableState(ComponentEditorsState).merge({
-    [ObjectPrefabComponent.name]: ItemPrefabComponentEditor
-  })
-
-  getMutableState(ComponentShelfCategoriesState).FPS.merge([ObjectPrefabComponent])
+  if (isClient) {
+    ;(await import('./editor/index')).default()
+  }
 }

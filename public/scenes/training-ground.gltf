@@ -468,7 +468,7 @@
           "color": 16777215,
           "intensity": 4,
           "castShadow": true,
-          "shadowBias": -0.00001,
+          "shadowBias": -0.0001,
           "shadowRadius": 1,
           "cameraFar": 50
         },
@@ -516,7 +516,7 @@
           "src": "__$project$__/hexafield/ee-fps/assets/low-poly_fps_map.glb?hash=7c8bc0",
           "cameraOcclusion": true,
           "applyColliders": false,
-          "shape": "box"
+          "shape": "mesh"
         },
         "EE_shadow": {
           "cast": true,
@@ -530,7 +530,19 @@
           "envMapSourceEntityUUID": "",
           "envMapIntensity": 1
         },
-        "EE_visible": {}
+        "EE_visible": {},
+        "EE_rigidbody": {
+          "type": "fixed",
+          "ccd": false,
+          "allowRolling": true,
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
+          "canSleep": true,
+          "gravityScale": 1
+        }
       }
     },
     {
@@ -651,8 +663,8 @@
     "EE_model",
     "EE_shadow",
     "EE_envmap",
-    "EE_ground_plane",
     "EE_rigidbody",
+    "EE_ground_plane",
     "EE_collider",
     "IR_object"
   ]
