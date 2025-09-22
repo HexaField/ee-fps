@@ -155,37 +155,165 @@
     "thumbnailKey": "projects/hexafield/ee-fps/public/thumbnails/1d6f5a9b719c2646d9e0cb4003a5e3ef3690d3605504c1.png",
     "thumbnailMode": "automatic"
   },
-  "public/assets/weapons/assault_rifle.glb": {
+  "public/assets/weapons/assault_rifle/assault_rifle.bin": {
     "type": "file",
     "tags": [
-      "Model"
+      "unknown"
     ],
     "dependencies": [],
-    "name": "assault_rifle.glb"
+    "name": "assault_rifle.bin"
   },
-  "public/assets/weapons/heavy_pistol.glb": {
+  "public/assets/weapons/assault_rifle/assault_rifle.gltf": {
     "type": "file",
     "tags": [
       "Model"
     ],
     "dependencies": [],
-    "name": "heavy_pistol.glb"
+    "name": "assault_rifle.gltf"
   },
-  "public/assets/weapons/pulse_rifle.glb": {
+  "public/assets/weapons/assault_rifle/texture_diffuse.png": {
     "type": "file",
     "tags": [
-      "Model"
+      "Image"
     ],
     "dependencies": [],
-    "name": "pulse_rifle.glb"
+    "name": "texture_diffuse.png"
   },
-  "public/assets/weapons/shotgun.glb": {
+  "public/assets/weapons/assault_rifle/texture_metallic-texture_roughness.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_metallic-texture_roughness.png"
+  },
+  "public/assets/weapons/assault_rifle/texture_normal.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_normal.png"
+  },
+  "public/assets/weapons/heavy_pistol/heavy_pistol.bin": {
+    "type": "file",
+    "tags": [
+      "unknown"
+    ],
+    "dependencies": [],
+    "name": "heavy_pistol.bin"
+  },
+  "public/assets/weapons/heavy_pistol/heavy_pistol.gltf": {
     "type": "file",
     "tags": [
       "Model"
     ],
     "dependencies": [],
-    "name": "shotgun.glb"
+    "name": "heavy_pistol.gltf"
+  },
+  "public/assets/weapons/heavy_pistol/texture_diffuse.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_diffuse.png"
+  },
+  "public/assets/weapons/heavy_pistol/texture_metallic-texture_roughness.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_metallic-texture_roughness.png"
+  },
+  "public/assets/weapons/heavy_pistol/texture_normal.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_normal.png"
+  },
+  "public/assets/weapons/pulse_rifle/pulse_rifle.bin": {
+    "type": "file",
+    "tags": [
+      "unknown"
+    ],
+    "dependencies": [],
+    "name": "pulse_rifle.bin"
+  },
+  "public/assets/weapons/pulse_rifle/pulse_rifle.gltf": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "pulse_rifle.gltf"
+  },
+  "public/assets/weapons/pulse_rifle/texture_diffuse.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_diffuse.png"
+  },
+  "public/assets/weapons/pulse_rifle/texture_metallic-texture_roughness.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_metallic-texture_roughness.png"
+  },
+  "public/assets/weapons/pulse_rifle/texture_normal.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_normal.png"
+  },
+  "public/assets/weapons/shotgun/shotgun.bin": {
+    "type": "file",
+    "tags": [
+      "unknown"
+    ],
+    "dependencies": [],
+    "name": "shotgun.bin"
+  },
+  "public/assets/weapons/shotgun/shotgun.gltf": {
+    "type": "file",
+    "tags": [
+      "Model"
+    ],
+    "dependencies": [],
+    "name": "shotgun.gltf"
+  },
+  "public/assets/weapons/shotgun/texture_diffuse.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_diffuse.png"
+  },
+  "public/assets/weapons/shotgun/texture_metallic-texture_roughness.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_metallic-texture_roughness.png"
+  },
+  "public/assets/weapons/shotgun/texture_normal.png": {
+    "type": "file",
+    "tags": [
+      "Image"
+    ],
+    "dependencies": [],
+    "name": "texture_normal.png"
   },
   "public/scenes/training-ground.gltf": {
     "type": "scene",

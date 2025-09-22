@@ -360,7 +360,24 @@
     },
     {
       "name": "scene preview camera",
-      "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 2.5, 5, 1],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2.5,
+        5,
+        1
+      ],
       "extensions": {
         "EE_uuid": {
           "entityID": "bb362197-f14d-4da7-9c3c-1ed834386423"
@@ -396,8 +413,22 @@
     {
       "name": "spawn point",
       "matrix": [
-        -1, 1.0106430996148606e-15, -1.224646852585167e-16, 0, 1.0106430996148606e-15, 1, 1.2246467991473547e-16, 0,
-        1.2246468525851686e-16, 1.2246467991473532e-16, -1, 0, 0, 0, 0, 1
+        -1,
+        1.0106430996148606e-15,
+        -1.224646852585167e-16,
+        0,
+        1.0106430996148606e-15,
+        1,
+        1.2246467991473547e-16,
+        0,
+        1.2246468525851686e-16,
+        1.2246467991473532e-16,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1
       ],
       "extensions": {
         "EE_uuid": {
@@ -412,8 +443,22 @@
     {
       "name": "directional light",
       "matrix": [
-        0.8201518642540717, 0.2860729507918132, -0.49549287218469207, 0, -2.135677357184562e-9, 0.866025399522099,
-        0.5000000073825887, 0, 0.5721458901019657, -0.41007593712366663, 0.7102723465203862, 0, 0, 0, 0, 1
+        0.8201518642540717,
+        0.2860729507918132,
+        -0.49549287218469207,
+        0,
+        -2.135677357184562e-9,
+        0.866025399522099,
+        0.5000000073825887,
+        0,
+        0.5721458901019657,
+        -0.41007593712366663,
+        0.7102723465203862,
+        0,
+        0,
+        0,
+        0,
+        1
       ],
       "extensions": {
         "EE_uuid": {
@@ -445,7 +490,24 @@
     },
     {
       "name": "low-poly_fps_map",
-      "matrix": [0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1],
+      "matrix": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
       "extensions": {
         "EE_uuid": {
           "entityID": "4c1102a7-21e5-4bf6-affe-f9e3276dcfae"
@@ -473,7 +535,11 @@
           "type": "fixed",
           "ccd": false,
           "allowRolling": true,
-          "enabledRotations": [true, true, true],
+          "enabledRotations": [
+            true,
+            true,
+            true
+          ],
           "canSleep": true,
           "gravityScale": 1
         }
@@ -489,46 +555,29 @@
         "EE_ground_plane": {
           "color": 16777215,
           "visible": false
-        },
-        "EE_rigidbody": {
-          "type": "fixed",
-          "ccd": false,
-          "allowRolling": true,
-          "enabledRotations": [true, true, true],
-          "canSleep": true,
-          "gravityScale": 1
-        },
-        "EE_collider": {
-          "shape": "plane",
-          "mass": 1,
-          "massCenter": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "friction": 0.5,
-          "restitution": 0.5,
-          "collisionLayer": 4,
-          "collisionMask": 3,
-          "matchMesh": true,
-          "centerOffset": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "boxSize": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "radius": 1,
-          "height": 2
         }
       }
     },
     {
       "name": "Health",
-      "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 26.996234506190824, 0, -14.582222317515757, 1],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        26.996234506190824,
+        0,
+        -14.582222317515757,
+        1
+      ],
       "extensions": {
         "EE_uuid": {
           "entityID": "55d04f2d-6d20-4a51-a332-66232e354ccb"
@@ -538,7 +587,216 @@
           "type": "health",
           "name": "Health",
           "modelURL": "__$project$__/hexafield/ee-fps/public/assets/health.glb",
-          "dynamic": false
+          "dynamic": false,
+          "box": false
+        }
+      }
+    },
+    {
+      "name": "Assault Rifle",
+      "matrix": [
+        -1.1102230246251565e-16,
+        -0.5,
+        0,
+        0,
+        -0.5,
+        1.1102230246251565e-16,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        -1.1102230246251565e-16,
+        0.05,
+        0,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": {
+          "entityID": "7bbcba2a-2f1b-4172-a8fb-dcffc1a167d2"
+        },
+        "EE_visible": {},
+        "FPS_weapon": {
+          "type": "assault_rifle",
+          "src": "__$project$__/hexafield/ee-fps/public/assets/weapons/assault_rifle/assault_rifle.gltf",
+          "sound": "__$project$__/hexafield/ee-fps/public/assets/sfx/Laser Bolt Shot High.mp3",
+          "color": "lightblue",
+          "spread": 0.2,
+          "projectiles": 1,
+          "distance": 50,
+          "recoil": 0.1,
+          "damage": 4,
+          "timeBetweenShots": 0.1
+        },
+        "EE_grabbable": {},
+        "EE_interactable": {
+          "label": "Assault Rifle",
+          "uiActivationType": 0,
+          "activationDistance": 2,
+          "clickInteract": false,
+          "callbacks": [
+            {
+              "callbackID": "grabCallback",
+              "target": "7bbcba2a-2f1b-4172-a8fb-dcffc1a167d2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pulse Rifle",
+      "matrix": [
+        1.1102230246251565e-16,
+        0.5,
+        0,
+        0,
+        -0.5,
+        1.1102230246251565e-16,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.05,
+        -1.8,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": {
+          "entityID": "05b9c615-41bb-4626-8cb0-a3e492d77b5d"
+        },
+        "EE_visible": {},
+        "FPS_weapon": {
+          "type": "pulse_rifle",
+          "src": "__$project$__/hexafield/ee-fps/public/assets/weapons/pulse_rifle/pulse_rifle.gltf",
+          "sound": "__$project$__/hexafield/ee-fps/public/assets/sfx/Laser Bolt Shot Semi High.mp3",
+          "color": "purple",
+          "spread": 0.02,
+          "projectiles": 1,
+          "distance": 50,
+          "recoil": 0.25,
+          "damage": 30,
+          "timeBetweenShots": 0.5
+        },
+        "EE_grabbable": {},
+        "EE_interactable": {
+          "label": "Pulse Rifle",
+          "uiActivationType": 0,
+          "activationDistance": 2,
+          "clickInteract": false,
+          "callbacks": [
+            {
+              "callbackID": "grabCallback",
+              "target": "05b9c615-41bb-4626-8cb0-a3e492d77b5d"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Heavy Pistol",
+      "matrix": [
+        1.1102230246251565e-16,
+        0.5,
+        0,
+        0,
+        -0.5,
+        1.1102230246251565e-16,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.05,
+        -4.6000000000000005,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": {
+          "entityID": "4c0b2b01-05a2-4bea-8f60-91570da7926f"
+        },
+        "EE_visible": {},
+        "FPS_weapon": {
+          "type": "heavy_pistol",
+          "src": "__$project$__/hexafield/ee-fps/public/assets/weapons/heavy_pistol/heavy_pistol.gltf",
+          "sound": "__$project$__/hexafield/ee-fps/public/assets/sfx/Laser Bolt Shot Normal.mp3",
+          "color": "orange",
+          "spread": 0.1,
+          "projectiles": 1,
+          "distance": 20,
+          "recoil": 0.1,
+          "damage": 10,
+          "timeBetweenShots": 0.2
+        },
+        "EE_grabbable": {},
+        "EE_interactable": {
+          "label": "Heavy Pistol",
+          "uiActivationType": 0,
+          "activationDistance": 2,
+          "clickInteract": false,
+          "callbacks": [
+            {
+              "callbackID": "grabCallback",
+              "target": "4c0b2b01-05a2-4bea-8f60-91570da7926f"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Object",
+      "matrix": [
+        1.1102230246251565e-16,
+        0.5,
+        0,
+        0,
+        -0.5,
+        1.1102230246251565e-16,
+        0,
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.1,
+        -7.1000000000000005,
+        1
+      ],
+      "extensions": {
+        "EE_uuid": {
+          "entityID": "28e70d7c-39ba-4b46-aed1-f7ec56e863d6"
+        },
+        "EE_visible": {},
+        "FPS_weapon": {
+          "type": "shotgun",
+          "src": "__$project$__/hexafield/ee-fps/public/assets/weapons/shotgun/shotgun.gltf",
+          "sound": "__$project$__/hexafield/ee-fps/public/assets/sfx/Laser Bolt Shot Very Low.mp3",
+          "color": "white",
+          "spread": 1,
+          "projectiles": 6,
+          "distance": 5,
+          "recoil": 1,
+          "damage": 8,
+          "timeBetweenShots": 1
+        },
+        "EE_grabbable": {},
+        "EE_interactable": {
+          "label": "Shotgun",
+          "uiActivationType": 0,
+          "activationDistance": 2,
+          "clickInteract": false,
+          "callbacks": [
+            {
+              "callbackID": "grabCallback",
+              "target": "28e70d7c-39ba-4b46-aed1-f7ec56e863d6"
+            }
+          ]
         }
       }
     }
@@ -546,7 +804,21 @@
   "scene": 0,
   "scenes": [
     {
-      "nodes": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      "nodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
     }
   ],
   "extensionsUsed": [
@@ -568,7 +840,9 @@
     "EE_envmap",
     "EE_rigidbody",
     "EE_ground_plane",
-    "EE_collider",
-    "IR_object"
+    "IR_object",
+    "FPS_weapon",
+    "EE_grabbable",
+    "EE_interactable"
   ]
 }

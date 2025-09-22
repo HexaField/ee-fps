@@ -26,6 +26,7 @@ import { TextComponent } from '@ir-engine/engine/src/scene/components/TextCompon
 import { defineActionQueue, getState, Schema } from '@ir-engine/hyperflux'
 import { ReferenceSpaceState } from '@ir-engine/spatial'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
+import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { SceneComponent } from '@ir-engine/spatial/src/renderer/components/SceneComponents'
 import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
@@ -41,8 +42,8 @@ import {
   Vector3
 } from 'three'
 import { playSoundEffect } from './SoundEffectSystem'
-import { WeaponActions } from './WeaponSystem'
-import { WeaponConfig } from './constants'
+import { WeaponActions, WeaponComponent } from './WeaponSystem'
+import { WeaponConfig, Weapons } from './constants'
 
 const particleParams = {
   systemParameters: {
@@ -320,7 +321,11 @@ const execute = () => {
     const userID = action.$user
     const avatarEntity = AvatarComponent.getUserAvatarEntity(userID)
     if (!avatarEntity) continue
-    const weaponConfig = WeaponConfig[action.weapon]
+    const weaponEntity = UUIDComponent.getEntityByUUID(action.weaponEntityUUID)
+    if (!weaponEntity) continue
+    const weaponType = getComponent(weaponEntity, WeaponComponent).type as Weapons
+    if (!weaponType) continue
+    const weaponConfig = WeaponConfig[weaponType]
 
     const damage = weaponConfig.damage
 
@@ -332,18 +337,14 @@ const execute = () => {
 
     for (let i = 0; i < action.hits.length; i++) {
       const hit = action.hits[i]
-      const weaponEntity = UUIDComponent.getEntityByUUID(
-        UUIDComponent.join({
-          entitySourceID: userID as string as SourceID,
-          entityID: 'weapon' as EntityID
-        })
-      )
       const userCameraEntity = UUIDComponent.getEntityByUUID(
         UUIDComponent.join({
           entitySourceID: userID as string as SourceID,
           entityID: 'camera' as EntityID
         })
       )
+      const weaponEntity = UUIDComponent.getEntityByUUID(action.weaponEntityUUID)
+      const sceneEntity = getAncestorWithComponents(weaponEntity, [SceneComponent])
       const userCameraTransform = getComponent(userCameraEntity, TransformComponent)
 
       const hitPosition = new Vector3().fromArray(hit.position)
@@ -357,7 +358,7 @@ const execute = () => {
 
       const laserOffsetFromGun = 0.25
 
-      const weaponTransform = getComponent(weaponEntity, TransformComponent)
+      const weaponTransform = getComponent(weaponEntity, RigidBodyComponent)
       const laserLength = Math.max(hitDistance - laserOffsetFromGun, laserOffsetFromGun)
       const laserPosition = weaponTransform.position.clone().add(
         weaponNossleOffset
@@ -372,7 +373,7 @@ const execute = () => {
         entityID: `${hitscanEntityCounter++}` as EntityID
       })
       setComponent(laserEntity, VisibleComponent)
-      setComponent(laserEntity, EntityTreeComponent, { parentEntity: getState(ReferenceSpaceState).originEntity })
+      setComponent(laserEntity, EntityTreeComponent, { parentEntity: sceneEntity })
 
       setComponent(laserEntity, TransformComponent, {
         position: laserPosition,

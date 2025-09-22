@@ -5,7 +5,7 @@ export const assetPath =
 
 export const WeaponConfig = {
   assault_rifle: {
-    src: assetPath + 'weapons/assault_rifle.glb',
+    src: assetPath + 'weapons/assault_rifle/assault_rifle.gltf',
     sound: assetPath + 'sfx/Laser Bolt Shot High.mp3',
     color: 'lightblue',
     spread: 0.2,
@@ -16,7 +16,7 @@ export const WeaponConfig = {
     timeBetweenShots: 1 / 10 // 10 shots per second, 40 damage per second
   } as WeaponType,
   pulse_rifle: {
-    src: assetPath + 'weapons/pulse_rifle.glb',
+    src: assetPath + 'weapons/pulse_rifle/pulse_rifle.gltf',
     sound: assetPath + 'sfx/Laser Bolt Shot Semi High.mp3',
     color: 'purple',
     spread: 0.02,
@@ -27,7 +27,7 @@ export const WeaponConfig = {
     timeBetweenShots: 1 / 2 // 2 shots per second, 60 damage per second
   } as WeaponType,
   heavy_pistol: {
-    src: assetPath + 'weapons/heavy_pistol.glb',
+    src: assetPath + 'weapons/heavy_pistol/heavy_pistol.gltf',
     sound: assetPath + 'sfx/Laser Bolt Shot Normal.mp3',
     color: 'orange',
     spread: 0.1,
@@ -38,7 +38,7 @@ export const WeaponConfig = {
     timeBetweenShots: 1 / 5 // 5 shots per second, 50 damage per second
   } as WeaponType,
   shotgun: {
-    src: assetPath + 'weapons/shotgun.glb',
+    src: assetPath + 'weapons/shotgun/shotgun.gltf',
     sound: assetPath + 'sfx/Laser Bolt Shot Very Low.mp3',
     color: 'white',
     spread: 1,

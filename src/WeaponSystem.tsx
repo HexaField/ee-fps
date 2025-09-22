@@ -12,13 +12,15 @@ import {
   UUIDComponent,
   UndefinedEntity,
   createEntity,
+  defineComponent,
   defineSystem,
   getComponent,
   hasComponent,
   isAuthorityOverEntity,
   removeComponent,
-  removeEntity,
   setComponent,
+  useComponent,
+  useHasComponent,
   useOptionalComponent
 } from '@ir-engine/ecs'
 import { ikTargets } from '@ir-engine/engine/src/avatar/animation/Util'
@@ -41,15 +43,16 @@ import {
 import { ReferenceSpaceState, TransformComponent } from '@ir-engine/spatial'
 
 import { AvatarMovementSettingsState } from '@ir-engine/engine/src/avatar/state/AvatarMovementSettingsState'
-import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
-import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
+import { GrabbedComponent } from '@ir-engine/engine/src/grabbable/GrabbableComponent'
 import { CameraComponent } from '@ir-engine/spatial/src/camera/components/CameraComponent'
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
 import { TargetCameraRotationComponent } from '@ir-engine/spatial/src/camera/components/TargetCameraRotationComponent'
 import { FollowCameraMode } from '@ir-engine/spatial/src/camera/types/FollowCameraMode'
 import { mergeBufferGeometries } from '@ir-engine/spatial/src/common/classes/BufferGeometryUtils'
+import { Axis } from '@ir-engine/spatial/src/common/constants/MathConstants'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { InputComponent } from '@ir-engine/spatial/src/input/components/InputComponent'
+import { InputState } from '@ir-engine/spatial/src/input/state/InputState'
 import { Physics, RaycastArgs } from '@ir-engine/spatial/src/physics/classes/Physics'
 import { CollisionGroups, DefaultCollisionMask } from '@ir-engine/spatial/src/physics/enums/CollisionGroups'
 import { getInteractionGroups } from '@ir-engine/spatial/src/physics/functions/getInteractionGroups'
@@ -73,16 +76,14 @@ import {
 } from 'three'
 import { WeaponConfig, Weapons } from './constants'
 import { HealthActions, HealthState } from './HealthSystem'
-
-const WeaponSchema = Schema.LiteralUnion(['assault_rifle', 'pulse_rifle', 'heavy_pistol', 'shotgun'] as const)
+import { ObjectReactor } from './ObjectSystem'
 
 export const WeaponActions = {
   changeWeapon: defineAction(
     Schema.Object(
       {
         userID: Schema.UserID(),
-        weapon: WeaponSchema,
-        handedness: Schema.LiteralUnion(['left', 'right'] as const)
+        weaponEntityUUID: EntitySchema.EntityUUID()
       },
       {
         $id: 'hexafield.fps-game.WeaponActions.CHANGE_WEAPON',
@@ -95,7 +96,7 @@ export const WeaponActions = {
   fireWeapon: defineAction(
     Schema.Object(
       {
-        weapon: WeaponSchema,
+        weaponEntityUUID: EntitySchema.EntityUUID(),
         hits: Schema.Array(
           Schema.Object({
             position: Schema.Tuple([Schema.Number(), Schema.Number(), Schema.Number()]),
@@ -118,13 +119,12 @@ export const WeaponActions = {
 
 const WeaponState = defineState({
   name: 'hexafield.fps-game.WeaponState',
-  initial: {} as Record<UserID, { weapon: Weapons; handedness: 'left' | 'right' }>,
+  initial: {} as Record<UserID, { weaponEntityUUID: EntityUUID }>,
 
   receptors: {
     onChangeWeapon: WeaponActions.changeWeapon.receive((action) => {
       getMutableState(WeaponState)[action.userID].set({
-        weapon: action.weapon,
-        handedness: action.handedness
+        weaponEntityUUID: action.weaponEntityUUID
       })
     })
   },
@@ -145,67 +145,6 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
   const weaponState = useHookstate(getMutableState(WeaponState)[props.userID])
 
   const isSelf = props.userID === getState(EngineState).userID
-  const userCameraEntity = UUIDComponent.useEntityByUUID((props.userID + 'camera') as EntityUUID)
-
-  const weaponModelEntity = useHookstate(UndefinedEntity)
-
-  useEffect(() => {
-    if (!userCameraEntity) return
-
-    const entity = createEntity()
-    setComponent(entity, UUIDComponent, {
-      entitySourceID: props.userID as any as SourceID,
-      entityID: 'weapon' as EntityID
-    })
-    setComponent(entity, VisibleComponent)
-    setComponent(entity, TransformComponent, { scale: new Vector3(0.1, 0.1, -0.1) })
-    setComponent(entity, EntityTreeComponent, { parentEntity: getState(ReferenceSpaceState).originEntity })
-    setComponent(entity, ComputedTransformComponent, {
-      referenceEntities: [userCameraEntity],
-      computeFunction: () => {
-        const cameraTransform = getComponent(userCameraEntity, TransformComponent)
-        const weaponTransform = getComponent(entity, TransformComponent)
-        weaponTransform.position
-          .copy(cameraTransform.position)
-          .add(new Vector3(0.1, -0.15, -0.2).applyQuaternion(cameraTransform.rotation))
-        weaponTransform.rotation.copy(cameraTransform.rotation)
-      }
-    })
-    setComponent(entity, NameComponent, 'Weapon Model ' + props.userID)
-    setComponent(entity, ShadowComponent)
-    weaponModelEntity.set(entity)
-    return () => {
-      removeEntity(entity)
-      weaponModelEntity.set(UndefinedEntity)
-    }
-  }, [userCameraEntity])
-
-  useEffect(() => {
-    if (!weaponModelEntity.value) return
-    setComponent(weaponModelEntity.value, GLTFComponent, { src: WeaponConfig[weaponState.weapon.value].src })
-    return () => {
-      removeComponent(weaponModelEntity.value, GLTFComponent)
-    }
-  }, [weaponModelEntity.value, weaponState.weapon.value])
-
-  // useEffect(() => {
-  //   if (!weaponModelEntity.value) return
-  //   setComponent(weaponModelEntity.value, TransformComponent, {
-  //     position: new Vector3(weaponState.handedness.value === 'left' ? -0.15 : 0.15, -0.2, -0.5)
-  //   })
-  // }, [weaponModelEntity.value, weaponState.handedness])
-
-  useEffect(() => {
-    return () => {
-      // Reset IK targets when weapon is removed
-      const avatarSourceID = AvatarComponent.getSelfSourceID()
-      const leftHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.leftHand)
-      const rightHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.rightHand)
-
-      if (leftHandTarget) AvatarIKTargetComponent.blendWeight[leftHandTarget] = 0
-      if (rightHandTarget) AvatarIKTargetComponent.blendWeight[rightHandTarget] = 0
-    }
-  }, [])
 
   const reticleEntity = useHookstate(() => {
     if (!isSelf) return UndefinedEntity
@@ -229,26 +168,82 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
     return entity
   }).value
 
-  useEffect(() => {
-    if (!isSelf) return
+  const weaponEntity = UUIDComponent.useEntityByUUID(weaponState.weaponEntityUUID.value)
+  const weaponType = useOptionalComponent(weaponEntity, WeaponComponent)?.type as Weapons
 
-    if (weaponState.weapon.value === 'heavy_pistol') {
+  useEffect(() => {
+    if (!isSelf || !weaponType) return
+
+    if (weaponType === 'heavy_pistol') {
       createCrosshairReticle(reticleEntity)
     }
-    if (weaponState.weapon.value === 'shotgun') {
+    if (weaponType === 'shotgun') {
       createRingReticle(reticleEntity)
     }
-    if (weaponState.weapon.value === 'pulse_rifle') {
+    if (weaponType === 'pulse_rifle') {
       createDotReticle(reticleEntity)
     }
-    if (weaponState.weapon.value === 'assault_rifle') {
+    if (weaponType === 'assault_rifle') {
       createCrosshairReticle(reticleEntity, true)
     }
 
     return () => {
       removeComponent(reticleEntity, MeshComponent)
     }
-  }, [weaponState.weapon.value])
+  }, [weaponType])
+
+  return null
+}
+
+export const WeaponComponent = defineComponent({
+  name: 'WeaponComponent',
+
+  jsonID: 'FPS_weapon',
+
+  schema: Schema.Object({
+    type: Schema.String(),
+    src: Schema.String(),
+    sound: Schema.String(),
+    color: Schema.String(),
+    spread: Schema.Number(),
+    projectiles: Schema.Number(),
+    distance: Schema.Number(),
+    recoil: Schema.Number(),
+    damage: Schema.Number(),
+    timeBetweenShots: Schema.Number()
+  }),
+
+  reactor: WeaponReactor
+})
+
+function WeaponReactor(props: { entity: Entity }) {
+  const weapon = useComponent(props.entity, WeaponComponent)
+
+  /** @todo replace this with component based prefabs once we have those */
+  ObjectReactor({
+    entity: props.entity,
+    prefab: {
+      type: weapon.type,
+      name: weapon.type.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+      modelURL: weapon.src,
+      dynamic: true,
+      box: true
+    }
+  })
+  const grabbed = useHasComponent(props.entity, GrabbedComponent)
+
+  useEffect(() => {
+    if (!grabbed) return
+    const grabberEntity = getComponent(props.entity, GrabbedComponent).grabberEntity
+    const selfAvatar = AvatarComponent.getSelfAvatarEntity()
+    if (grabberEntity !== selfAvatar) return
+    dispatchAction(
+      WeaponActions.changeWeapon({
+        userID: getState(EngineState).userID,
+        weaponEntityUUID: UUIDComponent.get(props.entity)
+      })
+    )
+  }, [grabbed])
 
   return null
 }
@@ -273,7 +268,10 @@ const onPrimaryClick = () => {
   const physicsWorld = Physics.getWorld(selfAvatarEntity)
   if (!physicsWorld) return
 
-  const currentWeapon = getState(WeaponState)[getState(EngineState).userID].weapon
+  const weaponEntityUUID = getState(WeaponState)[getState(EngineState).userID]?.weaponEntityUUID
+  if (!weaponEntityUUID) return
+  const currentWeaponEntity = UUIDComponent.getEntityByUUID(weaponEntityUUID)
+  const currentWeapon = getComponent(currentWeaponEntity, WeaponComponent).type as Weapons
   const weaponConfig = WeaponConfig[currentWeapon]
 
   const now = getState(ECSState).simulationTime
@@ -342,7 +340,7 @@ const onPrimaryClick = () => {
 
   dispatchAction(
     WeaponActions.fireWeapon({
-      weapon: currentWeapon,
+      weaponEntityUUID,
       hits: entityHits.map((hit) => ({
         position: hit.position.toArray() as [number, number, number],
         normal: hit.normal ? (hit.normal.toArray() as [number, number, number]) : undefined,
@@ -350,17 +348,6 @@ const onPrimaryClick = () => {
         isPlayer: hit.isPlayer,
         damage: weaponConfig.damage
       }))
-    })
-  )
-}
-
-const swapHands = () => {
-  const weaponState = getState(WeaponState)[getState(EngineState).userID]
-  dispatchAction(
-    WeaponActions.changeWeapon({
-      userID: getState(EngineState).userID,
-      weapon: weaponState.weapon,
-      handedness: weaponState.handedness === 'left' ? 'right' : 'left'
     })
   )
 }
@@ -374,80 +361,84 @@ const updateIKTargets = () => {
   if (!selfAvatarEntity) return
 
   const avatarSourceID = AvatarComponent.getSelfSourceID()
+
+  const leftHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.leftHand)
+  const rightHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.rightHand)
+
+  // reset IK targets
+  AvatarIKTargetComponent.blendWeight[leftHandTarget] = 0
+  AvatarIKTargetComponent.blendWeight[rightHandTarget] = 0
+
   const weaponState = getState(WeaponState)[getState(EngineState).userID]
   if (!weaponState) return
 
-  const weaponModelEntity = UUIDComponent.getEntityByUUID(
-    UUIDComponent.join({
-      entitySourceID: getState(EngineState).userID as any as SourceID,
-      entityID: 'weapon' as EntityID
-    })
-  )
+  const weaponModelEntity = UUIDComponent.getEntityByUUID(weaponState.weaponEntityUUID)
   if (!weaponModelEntity) return
 
   const viewerEntity = getState(ReferenceSpaceState).viewerEntity
   const viewerTransform = getComponent(viewerEntity, TransformComponent)
 
-  const leftHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.leftHand)
-  const rightHandTarget = AvatarIKTargetComponent.getTargetEntity(avatarSourceID, ikTargets.rightHand)
+  const headEntity = getComponent(selfAvatarEntity, AvatarRigComponent).bonesToEntities.head
+  if (!headEntity) return
+  const headPosition = TransformComponent.getScenePosition(headEntity, new Vector3())
 
-  const isLeftHanded = weaponState.handedness === 'left'
-  const activeHandTarget = isLeftHanded ? leftHandTarget : rightHandTarget
+  const preferredHand = getState(InputState).preferredHand
+  const isLeftHanded = preferredHand === 'left'
+  const frontHandTarget = isLeftHanded ? rightHandTarget : leftHandTarget
+  const backHandTarget = isLeftHanded ? leftHandTarget : rightHandTarget
 
-  if (activeHandTarget) {
-    if (isLeftHanded) {
-      _tempVector3.set(-0.125, -0.125, 0.75)
-    } else {
-      _tempVector3.set(0.125, -0.125, 0.75)
-    }
+  if (!frontHandTarget || !backHandTarget) return
 
-    _tempVector3.applyQuaternion(viewerTransform.rotation)
-    _tempVector3.add(viewerTransform.position)
+  /** @todo add scope mode, for now just have gun at chest height */
 
-    setComponent(activeHandTarget, TransformComponent, {
-      position: _tempVector3,
-      rotation: viewerTransform.rotation
-    })
+  // back hand is the preferred hand, that holds the grip
+  // front hand is the off-hand, that holds the barrel
+  // adjust Y based on look pitch: lower when looking up, higher when looking down
+  _tempVector3.set(0, 0, -1).applyQuaternion(viewerTransform.rotation)
+  const pitchAdjust = _tempVector3.y * 0.25
 
-    AvatarIKTargetComponent.blendWeight[activeHandTarget] = IK_BLEND_WEIGHT
-  }
+  _tempVector3.set(0, -0.125 - pitchAdjust, -0.25)
 
-  /** off-hand, does nothing for pistol, so ignore */
-  // const inactiveHandTarget = isLeftHanded ? rightHandTarget : leftHandTarget
-  // if (inactiveHandTarget) {
-  //   if (isLeftHanded) {
-  //     _tempVector3.set(0, -0.125, 0.75)
-  //   } else {
-  //     _tempVector3.set(0, -0.125, 0.75)
-  //   }
-  //   _tempVector3.applyQuaternion(viewerTransform.rotation)
-  //   _tempVector3.add(viewerTransform.position)
-  //   setComponent(inactiveHandTarget, TransformComponent, {
-  //     position: _tempVector3,
-  //     rotation: viewerTransform.rotation
-  //   })
-  //   AvatarIKTargetComponent.blendWeight[inactiveHandTarget] = IK_BLEND_WEIGHT
-  // }
-}
+  _tempVector3.applyQuaternion(viewerTransform.rotation)
+  _tempVector3.add(headPosition)
 
-const changeWeapon = (weapon: Weapons) => {
-  const weaponState = getState(WeaponState)[getState(EngineState).userID]
-  if (weaponState.weapon === weapon) return
+  setComponent(backHandTarget, TransformComponent, {
+    position: _tempVector3,
+    // rotate 180 degrees on X axis to match hand orientation
+    rotation: new Quaternion().multiplyQuaternions(
+      viewerTransform.rotation,
+      new Quaternion().setFromAxisAngle(Axis.Y, Math.PI)
+    )
+  })
 
-  dispatchAction(
-    WeaponActions.changeWeapon({
-      userID: getState(EngineState).userID,
-      weapon: weapon,
-      handedness: weaponState.handedness
-    })
-  )
+  AvatarIKTargetComponent.blendWeight[backHandTarget] = IK_BLEND_WEIGHT
+
+  _tempVector3.set(0, -0.125 - pitchAdjust, -0.5)
+  _tempVector3.applyQuaternion(viewerTransform.rotation)
+  _tempVector3.add(headPosition)
+  setComponent(frontHandTarget, TransformComponent, {
+    position: _tempVector3,
+    // rotate 180 degrees on X axis to match hand orientation
+    rotation: new Quaternion().multiplyQuaternions(
+      viewerTransform.rotation,
+      new Quaternion().setFromAxisAngle(Axis.X, Math.PI)
+    )
+  })
+  AvatarIKTargetComponent.blendWeight[frontHandTarget] = IK_BLEND_WEIGHT
+
+  // pistol is always held in one hand, so ignore off-hand for now
+  // for now, we will ignore the pistol
 }
 
 const processWeaponFireAction = (action: typeof WeaponActions.fireWeapon._TYPE) => {
   const avatarEntity = AvatarComponent.getUserAvatarEntity(action.$user)
   if (!isAuthorityOverEntity(avatarEntity)) return
 
-  const weaponConfig = WeaponConfig[action.weapon]
+  const weaponEntity = UUIDComponent.getEntityByUUID(action.weaponEntityUUID)
+  if (!weaponEntity) return
+  const weaponType = getComponent(weaponEntity, WeaponComponent).type as Weapons
+  if (!weaponType) return
+  const weaponConfig = WeaponConfig[weaponType]
 
   for (const ray of action.hits) {
     if (!ray.hitEntityUUID) continue
@@ -480,29 +471,19 @@ const execute = () => {
   if (viewerEntity) {
     const buttons = InputComponent.getMergedButtons(viewerEntity)
     if (buttons.PrimaryClick?.pressed) onPrimaryClick()
-    if (buttons.KeyZ?.down) swapHands()
-    if (buttons.Digit1?.down) changeWeapon(weaponKeys[0])
-    if (buttons.Digit2?.down) changeWeapon(weaponKeys[1])
-    if (buttons.Digit3?.down) changeWeapon(weaponKeys[2])
-    if (buttons.Digit4?.down) changeWeapon(weaponKeys[3])
+    // if (buttons.Digit1?.down) changeWeapon(weaponKeys[0])
+    // if (buttons.Digit2?.down) changeWeapon(weaponKeys[1])
+    // if (buttons.Digit3?.down) changeWeapon(weaponKeys[2])
+    // if (buttons.Digit4?.down) changeWeapon(weaponKeys[3])
+    // lerpCameraZoom(viewerEntity, buttons.SecondaryClick?.down)
 
-    // updateIKTargets()
+    updateIKTargets()
   }
 
   for (const action of weaponFireQueue()) processWeaponFireAction(action)
 }
 
-const WeaponReactor = (props: { viewerEntity: Entity }) => {
-  useEffect(() => {
-    dispatchAction(
-      WeaponActions.changeWeapon({
-        userID: getState(EngineState).userID,
-        weapon: weaponKeys[0],
-        handedness: 'right'
-      })
-    )
-  }, [])
-
+const WeaponSetupReactor = () => {
   const viewerEntity = useMutableState(ReferenceSpaceState).viewerEntity.value
   const followCamera = useOptionalComponent(viewerEntity, FollowCameraComponent)
 
@@ -537,7 +518,7 @@ export const WeaponSystem = defineSystem({
     const viewerEntity = useMutableState(ReferenceSpaceState).viewerEntity.value
     if (!viewerEntity) return null
 
-    return <WeaponReactor viewerEntity={viewerEntity} />
+    return <WeaponSetupReactor />
   }
 })
 

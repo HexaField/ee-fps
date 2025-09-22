@@ -11,11 +11,12 @@ import {
   removeEntity,
   setComponent,
   UndefinedEntity,
+  useComponent,
   UUIDComponent
 } from '@ir-engine/ecs'
 import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 
-import { TriggerCallbackComponent } from '@ir-engine/engine/src/scene/components/TriggerCallbackComponent'
+import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { definePrefab } from '@ir-engine/engine/src/scene/functions/definePrefab'
 import { Schema, useHookstate } from '@ir-engine/hyperflux'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
@@ -25,13 +26,14 @@ import { BodyTypes, Shapes } from '@ir-engine/spatial/src/physics/types/PhysicsT
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { TransformComponent } from '@ir-engine/spatial/src/transform/components/TransformComponent'
+import React from 'react'
 import { Box3, Vector3 } from 'three'
 
-const ObjectReactor = (props: {
+export const ObjectReactor = (props: {
   entity: Entity
-  prefab: { type: string; name: string; modelURL: string; dynamic: boolean }
+  prefab: { type: string; name: string; modelURL: string; dynamic: boolean; box: boolean }
 }) => {
-  const { modelURL, name, dynamic } = props.prefab
+  const { modelURL, name, dynamic, box } = props.prefab
   const entity = props.entity
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const ObjectReactor = (props: {
     const modelEntity = createEntity()
     setComponent(entity, NameComponent, name)
     setComponent(modelEntity, UUIDComponent, {
-      entitySourceID: getComponent(entity, UUIDComponent).entitySourceID,
+      entitySourceID: UUIDComponent.getAsSourceID(entity),
       entityID: 'model' as EntityID
     })
     setComponent(modelEntity, TransformComponent)
@@ -53,6 +55,7 @@ const ObjectReactor = (props: {
     setComponent(modelEntity, NameComponent, getComponent(entity, NameComponent) + ' Model')
     setComponent(modelEntity, VisibleComponent)
     setComponent(modelEntity, GLTFComponent, { src: modelURL })
+    setComponent(modelEntity, ShadowComponent)
     modelEntityState.set(modelEntity)
     return () => {
       removeEntity(modelEntity)
@@ -65,36 +68,35 @@ const ObjectReactor = (props: {
   useEffect(() => {
     if (!modelLoaded) return
 
-    const box = new Box3()
+    const box3 = new Box3()
     const source = UUIDComponent.getAsSourceID(modelEntityState.value)
     const entities = UUIDComponent.getEntitiesBySource(source)
     for (const entity of entities) {
       const mesh = getOptionalComponent(entity, MeshComponent)
       if (!mesh) continue
-      box.expandByObject(mesh)
+      box3.expandByObject(mesh)
     }
 
-    box.applyMatrix4(getComponent(modelEntityState.value, TransformComponent).matrixWorld.clone().invert())
+    box3.applyMatrix4(getComponent(modelEntityState.value, TransformComponent).matrixWorld.clone().invert())
 
     setComponent(entity, RigidBodyComponent, { type: dynamic ? BodyTypes.Dynamic : BodyTypes.Fixed })
 
-    const size = box.getSize(new Vector3())
-    const center = box.getCenter(new Vector3())
+    const size = box3.getSize(new Vector3())
+    const center = box3.getCenter(new Vector3())
 
     const colliderEntity = createEntity()
     setComponent(colliderEntity, UUIDComponent, {
       entitySourceID: UUIDComponent.getAsSourceID(entity),
       entityID: 'collider' as EntityID
     })
+    setComponent(colliderEntity, EntityTreeComponent, { parentEntity: entity })
     setComponent(colliderEntity, TransformComponent, {
       position: center,
       scale: size
     })
-    setComponent(colliderEntity, EntityTreeComponent, { parentEntity: entity })
     setComponent(colliderEntity, NameComponent, getComponent(entity, NameComponent) + ' Collider')
     setComponent(colliderEntity, VisibleComponent)
-    setComponent(colliderEntity, ColliderComponent, { shape: Shapes.Box })
-    setComponent(colliderEntity, TriggerCallbackComponent)
+    setComponent(colliderEntity, ColliderComponent, { shape: box ? Shapes.Box : Shapes.Mesh })
 
     return () => {
       removeEntity(colliderEntity)
@@ -114,8 +116,9 @@ export const ObjectPrefabComponent = definePrefab({
     type: Schema.String(),
     name: Schema.String(),
     modelURL: Schema.String(),
-    dynamic: Schema.Bool()
+    dynamic: Schema.Bool(),
+    box: Schema.Bool()
   }),
 
-  reactor: ObjectReactor
+  reactor: ({ entity }) => <ObjectReactor entity={entity} prefab={useComponent(entity, ObjectPrefabComponent)} />
 })
