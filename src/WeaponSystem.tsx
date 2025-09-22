@@ -14,6 +14,7 @@ import {
   createEntity,
   defineComponent,
   defineSystem,
+  getAncestorWithComponents,
   getComponent,
   hasComponent,
   isAuthorityOverEntity,
@@ -338,7 +339,16 @@ const onPrimaryClick = () => {
     const rot = cameraTransform.rotation.clone().multiply(new Quaternion().setFromEuler(spreadEuler))
     _camera.matrixWorld.compose(cameraTransform.position, rot, cameraTransform.scale)
 
-    const [cameraRaycastHit] = Physics.castRayFromCamera(physicsWorld, _camera, new Vector2(0, 0), raycastComponentData)
+    const [cameraRaycastHit] = Physics.castRayFromCamera(
+      physicsWorld,
+      _camera,
+      new Vector2(0, 0),
+      raycastComponentData,
+      (collider) => {
+        const rigidbody = getAncestorWithComponents(collider.entity, [RigidBodyComponent])
+        return currentWeaponEntity !== rigidbody // don't hit own weapon
+      }
+    )
 
     if (!cameraRaycastHit) {
       entityHits.push({
