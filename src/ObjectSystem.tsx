@@ -17,6 +17,7 @@ import {
 import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 
 import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
+import { TriggerCallbackComponent } from '@ir-engine/engine/src/scene/components/TriggerCallbackComponent'
 import { definePrefab } from '@ir-engine/engine/src/scene/functions/definePrefab'
 import { Schema, useHookstate } from '@ir-engine/hyperflux'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
@@ -29,12 +30,9 @@ import { TransformComponent } from '@ir-engine/spatial/src/transform/components/
 import React from 'react'
 import { Box3, Vector3 } from 'three'
 
-export const ObjectReactor = (props: {
-  entity: Entity
-  prefab: { type: string; name: string; modelURL: string; dynamic: boolean; box: boolean }
-}) => {
-  const { modelURL, name, dynamic, box } = props.prefab
+export const ObjectReactor = (props: { entity: Entity }) => {
   const entity = props.entity
+  const { modelURL, name } = useComponent(entity, ObjectPrefabComponent)
 
   useEffect(() => {
     setComponent(entity, NameComponent, name)
@@ -79,7 +77,7 @@ export const ObjectReactor = (props: {
 
     box3.applyMatrix4(getComponent(modelEntityState.value, TransformComponent).matrixWorld.clone().invert())
 
-    setComponent(entity, RigidBodyComponent, { type: dynamic ? BodyTypes.Dynamic : BodyTypes.Fixed })
+    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Fixed })
 
     const size = box3.getSize(new Vector3())
     const center = box3.getCenter(new Vector3())
@@ -96,7 +94,8 @@ export const ObjectReactor = (props: {
     })
     setComponent(colliderEntity, NameComponent, getComponent(entity, NameComponent) + ' Collider')
     setComponent(colliderEntity, VisibleComponent)
-    setComponent(colliderEntity, ColliderComponent, { shape: box ? Shapes.Box : Shapes.Mesh })
+    setComponent(colliderEntity, ColliderComponent, { shape: Shapes.Box })
+    setComponent(colliderEntity, TriggerCallbackComponent)
 
     return () => {
       removeEntity(colliderEntity)
@@ -115,10 +114,8 @@ export const ObjectPrefabComponent = definePrefab({
   schema: Schema.Object({
     type: Schema.String(),
     name: Schema.String(),
-    modelURL: Schema.String(),
-    dynamic: Schema.Bool(),
-    box: Schema.Bool()
+    modelURL: Schema.String()
   }),
 
-  reactor: ({ entity }) => <ObjectReactor entity={entity} prefab={useComponent(entity, ObjectPrefabComponent)} />
+  reactor: ({ entity }) => <ObjectReactor entity={entity} />
 })
