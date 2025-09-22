@@ -18,6 +18,7 @@ import {
   hasComponent,
   isAuthorityOverEntity,
   removeComponent,
+  removeEntity,
   setComponent,
   useComponent,
   useHasComponent,
@@ -43,7 +44,9 @@ import {
 import { ReferenceSpaceState, TransformComponent } from '@ir-engine/spatial'
 
 import { AvatarMovementSettingsState } from '@ir-engine/engine/src/avatar/state/AvatarMovementSettingsState'
+import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 import { GrabbedComponent } from '@ir-engine/engine/src/grabbable/GrabbableComponent'
+import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { CameraComponent } from '@ir-engine/spatial/src/camera/components/CameraComponent'
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
 import { TargetCameraRotationComponent } from '@ir-engine/spatial/src/camera/components/TargetCameraRotationComponent'
@@ -54,9 +57,10 @@ import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { InputComponent } from '@ir-engine/spatial/src/input/components/InputComponent'
 import { InputState } from '@ir-engine/spatial/src/input/state/InputState'
 import { Physics, RaycastArgs } from '@ir-engine/spatial/src/physics/classes/Physics'
+import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
 import { CollisionGroups, DefaultCollisionMask } from '@ir-engine/spatial/src/physics/enums/CollisionGroups'
 import { getInteractionGroups } from '@ir-engine/spatial/src/physics/functions/getInteractionGroups'
-import { SceneQueryType } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
+import { BodyTypes, SceneQueryType } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { ComputedTransformComponent } from '@ir-engine/spatial/src/transform/components/ComputedTransformComponent'
@@ -76,7 +80,6 @@ import {
 } from 'three'
 import { WeaponConfig, Weapons } from './constants'
 import { HealthActions, HealthState } from './HealthSystem'
-import { ObjectReactor } from './ObjectSystem'
 
 export const WeaponActions = {
   changeWeapon: defineAction(
@@ -217,19 +220,38 @@ export const WeaponComponent = defineComponent({
 })
 
 function WeaponReactor(props: { entity: Entity }) {
+  const entity = props.entity
   const weapon = useComponent(props.entity, WeaponComponent)
 
-  /** @todo replace this with component based prefabs once we have those */
-  ObjectReactor({
-    entity: props.entity,
-    prefab: {
-      type: weapon.type,
-      name: weapon.type.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-      modelURL: weapon.src,
-      dynamic: true,
-      box: true
+  const modelEntityState = useHookstate(UndefinedEntity)
+  const modelURL = weapon.src
+
+  useEffect(() => {
+    const name = weapon.type.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+    setComponent(entity, NameComponent, name)
+    setComponent(entity, VisibleComponent, name)
+    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Dynamic })
+
+    const modelEntity = createEntity()
+    setComponent(entity, NameComponent, name)
+    setComponent(modelEntity, UUIDComponent, {
+      entitySourceID: UUIDComponent.getAsSourceID(entity),
+      entityID: 'model' as EntityID
+    })
+    setComponent(modelEntity, TransformComponent)
+    setComponent(modelEntity, EntityTreeComponent, { parentEntity: entity })
+    setComponent(modelEntity, NameComponent, getComponent(entity, NameComponent) + ' Model')
+    setComponent(modelEntity, VisibleComponent)
+    setComponent(modelEntity, GLTFComponent, { src: modelURL, applyColliders: true, shape: 'mesh' })
+    setComponent(modelEntity, ShadowComponent)
+
+    modelEntityState.set(modelEntity)
+    return () => {
+      removeEntity(modelEntity)
+      modelEntityState.set(UndefinedEntity)
     }
-  })
+  }, [modelURL])
+
   const grabbed = useHasComponent(props.entity, GrabbedComponent)
 
   useEffect(() => {
