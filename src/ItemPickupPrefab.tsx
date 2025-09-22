@@ -32,7 +32,7 @@ import { Box3, Vector3 } from 'three'
 
 export const ObjectReactor = (props: { entity: Entity }) => {
   const entity = props.entity
-  const { modelURL, name } = useComponent(entity, ObjectPrefabComponent)
+  const { modelURL, name } = useComponent(entity, ItemPickupPrefab)
 
   useEffect(() => {
     setComponent(entity, NameComponent, name)
@@ -106,10 +106,10 @@ export const ObjectReactor = (props: { entity: Entity }) => {
   return null
 }
 
-export const ObjectPrefabComponent = definePrefab({
-  name: 'ObjectPrefab',
+export const ItemPickupPrefab = definePrefab({
+  name: 'ItemPickupPrefab',
 
-  jsonID: 'IR_object',
+  jsonID: 'FPS_pickup',
 
   schema: Schema.Object({
     type: Schema.String(),

@@ -13,7 +13,7 @@ import SelectInput from '@ir-engine/ui/src/components/editor/input/Select'
 import StringInput from '@ir-engine/ui/src/components/editor/input/String'
 
 import { assetPath } from '../constants'
-import { ObjectPrefabComponent } from '../ObjectSystem'
+import { ItemPickupPrefab } from '../ItemPickupPrefab'
 
 // Define the available item types
 const itemTypeOptions = [
@@ -36,7 +36,7 @@ const modelURLOptions = [
 
 export const ItemPrefabComponentEditor: EditorComponentType = (props) => {
   const { t } = useTranslation()
-  const objectPrefabComponent = useComponent(props.entity, ObjectPrefabComponent)
+  const objectPrefabComponent = useComponent(props.entity, ItemPickupPrefab)
 
   return (
     <NodeEditor
@@ -49,14 +49,14 @@ export const ItemPrefabComponentEditor: EditorComponentType = (props) => {
         <SelectInput
           options={itemTypeOptions}
           value={objectPrefabComponent.type}
-          onChange={commitProperty(ObjectPrefabComponent, 'type')}
+          onChange={commitProperty(ItemPickupPrefab, 'type')}
         />
       </InputGroup>
 
       <InputGroup name="Name" label={t('editor:properties.item.lbl-name', 'Item Name')}>
         <StringInput
           value={objectPrefabComponent.name}
-          onChange={commitProperty(ObjectPrefabComponent, 'name')}
+          onChange={commitProperty(ItemPickupPrefab, 'name')}
         />
       </InputGroup>
 
@@ -67,7 +67,7 @@ export const ItemPrefabComponentEditor: EditorComponentType = (props) => {
       >
         <StringInput
           value={objectPrefabComponent.modelURL}
-          onChange={commitProperty(ObjectPrefabComponent, 'modelURL')}
+          onChange={commitProperty(ItemPickupPrefab, 'modelURL')}
           placeholder="Enter model URL"
         />
       </InputGroup>
@@ -82,7 +82,7 @@ export const ItemPrefabComponentEditor: EditorComponentType = (props) => {
             <li
               key={index}
               className="cursor-pointer hover:text-white"
-              onClick={() => commitProperty(ObjectPrefabComponent, 'modelURL')(option.value)}
+              onClick={() => commitProperty(ItemPickupPrefab, 'modelURL')(option.value)}
             >
               {option.label}: <span className="text-blue-400">{option.value}</span>
             </li>

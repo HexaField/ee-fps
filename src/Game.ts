@@ -1,5 +1,5 @@
 import './GameSystem'
 import './HealthSystem'
-import './ObjectSystem'
+import './ItemPickupPrefab'
 import './PickupSystem'
 import './WeaponSystem'
