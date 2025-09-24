@@ -26,7 +26,7 @@ import { CollisionComponent } from '@ir-engine/spatial/src/physics/components/Co
 import { CollisionEvents } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
 import { setVisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import React, { useEffect } from 'react'
-import { ItemPickupPrefab } from './ItemPickupPrefab'
+import { ItemPickupComponent, ItemPickupPrefab } from './ItemPickupPrefab'
 import { playSoundEffect } from './SoundEffectSystem'
 
 export const PickupActions = {
@@ -88,7 +88,7 @@ export const PickupState = defineState({
   initial: {} as Record<EntityUUID, PickupStateType>,
 
   receptors: {
-    onPickupSpawned: ItemPickupPrefab.action.receive((action) => {
+    onPickupSpawned: ItemPickupPrefab.$Actions.spawn.receive((action) => {
       const pickupState = getMutableState(PickupState)
       pickupState[UUIDComponent.join(action)].set({
         active: true,
@@ -148,7 +148,7 @@ const PickupReactor = (props: { pickupEntityUUID: EntityUUID }) => {
     if (pickupState.value?.active) return
 
     const itemEntity = UUIDComponent.getEntityByUUID(props.pickupEntityUUID)
-    const itemPrefab = getComponent(itemEntity, ItemPickupPrefab)
+    const itemPrefab = getComponent(itemEntity, ItemPickupComponent)
 
     const transform = getComponent(itemEntity, TransformComponent)
     playSoundEffect(itemPrefab.type === 'health' ? 'heal' : 'powerup', {
@@ -160,7 +160,7 @@ const PickupReactor = (props: { pickupEntityUUID: EntityUUID }) => {
   return null
 }
 
-const itemCollisionQuery = defineQuery([ItemPickupPrefab, CollisionComponent, UUIDComponent])
+const itemCollisionQuery = defineQuery([ItemPickupComponent, CollisionComponent, UUIDComponent])
 
 const execute = () => {
   const now = getState(ECSState).simulationTime
@@ -193,7 +193,7 @@ const execute = () => {
       if (!networkObj) continue
 
       const userID = networkObj.ownerId
-      const itemPrefab = getComponent(itemEntity, ItemPickupPrefab)
+      const itemPrefab = getComponent(itemEntity, ItemPickupComponent)
 
       dispatchAction(
         PickupActions.itemPickup({

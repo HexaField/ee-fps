@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import {
   createEntity,
+  defineComponent,
   Entity,
   EntityID,
   EntityTreeComponent,
@@ -18,8 +19,8 @@ import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 
 import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { TriggerCallbackComponent } from '@ir-engine/engine/src/scene/components/TriggerCallbackComponent'
-import { definePrefab } from '@ir-engine/engine/src/scene/functions/definePrefab'
 import { Schema, useHookstate } from '@ir-engine/hyperflux'
+import { definePrefab } from '@ir-engine/spatial'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { ColliderComponent } from '@ir-engine/spatial/src/physics/components/ColliderComponent'
 import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
@@ -27,12 +28,11 @@ import { BodyTypes, Shapes } from '@ir-engine/spatial/src/physics/types/PhysicsT
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { TransformComponent } from '@ir-engine/spatial/src/transform/components/TransformComponent'
-import React from 'react'
 import { Box3, Vector3 } from 'three'
 
 export const ObjectReactor = (props: { entity: Entity }) => {
   const entity = props.entity
-  const { modelURL, name } = useComponent(entity, ItemPickupPrefab)
+  const { modelURL, name } = useComponent(entity, ItemPickupComponent)
 
   useEffect(() => {
     setComponent(entity, NameComponent, name)
@@ -106,8 +106,8 @@ export const ObjectReactor = (props: { entity: Entity }) => {
   return null
 }
 
-export const ItemPickupPrefab = definePrefab({
-  name: 'ItemPickupPrefab',
+export const ItemPickupComponent = defineComponent({
+  name: 'ItemPickupComponent',
 
   jsonID: 'FPS_pickup',
 
@@ -117,5 +117,10 @@ export const ItemPickupPrefab = definePrefab({
     modelURL: Schema.String()
   }),
 
-  reactor: ({ entity }) => <ObjectReactor entity={entity} />
+  reactor: ObjectReactor
+})
+
+export const ItemPickupPrefab = definePrefab({
+  name: 'ItemPickupPrefab',
+  components: [ItemPickupComponent, TransformComponent]
 })

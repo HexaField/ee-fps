@@ -21,7 +21,7 @@ import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/Vis
 import { TransformComponent } from '@ir-engine/spatial/src/transform/components/TransformComponent'
 import React, { useEffect } from 'react'
 import { NormalBlending, Vector3 } from 'three'
-import { ItemPickupPrefab } from './ItemPickupPrefab'
+import { ItemPickupComponent } from './ItemPickupPrefab'
 import { PickupActions } from './PickupSystem'
 
 export const PickupEffectState = defineState({
@@ -68,7 +68,7 @@ const PickupEffectReactor = (props: { index: number }) => {
 
     const worldPosition = TransformComponent.getWorldPosition(itemColliderEntity, new Vector3())
 
-    const pickupType = getComponent(pickupEntity, ItemPickupPrefab).type
+    const pickupType = getComponent(pickupEntity, ItemPickupComponent).type
 
     setComponent(entity, NameComponent, 'Pickup Effect')
 

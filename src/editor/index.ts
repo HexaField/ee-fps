@@ -1,16 +1,16 @@
 import { ComponentEditorsState } from '@ir-engine/editor/src/services/ComponentEditors'
 import { ComponentShelfCategoriesState } from '@ir-engine/editor/src/services/ComponentShelfCategoriesState'
 import { getMutableState } from '@ir-engine/hyperflux'
-import { ItemPickupPrefab } from '../ItemPickupPrefab'
+import { ItemPickupComponent } from '../ItemPickupPrefab'
 import { WeaponComponent } from '../WeaponSystem'
 import ItemPrefabComponentEditor from './ItemEditor'
 import WeaponPrefabComponentEditor from './WeaponEditor'
 
 export default async function () {
   getMutableState(ComponentEditorsState).merge({
-    [ItemPickupPrefab.name]: ItemPrefabComponentEditor,
+    [ItemPickupComponent.name]: ItemPrefabComponentEditor,
     [WeaponComponent.name]: WeaponPrefabComponentEditor
   })
 
-  getMutableState(ComponentShelfCategoriesState).FPS.merge([WeaponComponent, ItemPickupPrefab])
+  getMutableState(ComponentShelfCategoriesState).FPS.merge([WeaponComponent, ItemPickupComponent])
 }

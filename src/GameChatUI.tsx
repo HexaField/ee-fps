@@ -1,6 +1,15 @@
-import { ECSState, PresentationSystemGroup, useExecute } from '@ir-engine/ecs'
-import { AvatarState } from '@ir-engine/engine/src/avatar/state/AvatarNetworkState'
+import {
+  ECSState,
+  EntityUUID,
+  PresentationSystemGroup,
+  SourceID,
+  useExecute,
+  useOptionalComponent,
+  UUIDComponent
+} from '@ir-engine/ecs'
+import { AvatarComponent } from '@ir-engine/engine/src/avatar/components/AvatarComponent'
 import { getState, useHookstate, useMutableState } from '@ir-engine/hyperflux'
+import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import React, { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { GameChatState, GameMessage } from './GameChatSystem'
@@ -25,13 +34,30 @@ const GameMessageItem = ({ message }: { message: GameMessage }) => {
     }
   }
 
-  const avatarState = useMutableState(AvatarState).value
+  const avatarEntity = UUIDComponent.useEntityByUUID(
+    UUIDComponent.join({
+      entitySourceID: message.userID as string as SourceID,
+      entityID: AvatarComponent.entityID
+    })
+  )
 
-  const userName = avatarState[message.userID + 'avatar']?.name
-  const targetUserName = message.targetUserID ? avatarState[message.targetUserID + 'avatar']?.name : undefined
+  const userName = useOptionalComponent(avatarEntity, NameComponent) ?? message.userID
+
+  const targetEntity = UUIDComponent.useEntityByUUID(
+    message.targetUserID
+      ? UUIDComponent.join({
+          entitySourceID: message.targetUserID as string as SourceID,
+          entityID: AvatarComponent.entityID
+        })
+      : ('' as string as EntityUUID)
+  )
+
+  const targetName = useOptionalComponent(targetEntity, NameComponent)
+
+  const targetUserName = message.targetUserID ? targetName : undefined
 
   let parsedMessage = message.text.replace(/\${userID}/g, userName)
-  if (userName) {
+  if (targetUserName) {
     parsedMessage = parsedMessage.replace(/\${targetUserID}/g, targetUserName)
   }
 
