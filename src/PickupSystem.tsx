@@ -88,9 +88,9 @@ export const PickupState = defineState({
   initial: {} as Record<EntityUUID, PickupStateType>,
 
   receptors: {
-    onPickupSpawned: ItemPickupPrefab.$Actions.spawn.receive((action) => {
+    onPickupSpawned: ItemPickupPrefab.$Actions.set.receive((action) => {
       const pickupState = getMutableState(PickupState)
-      pickupState[UUIDComponent.join(action)].set({
+      pickupState[action.entityUUID].set({
         active: true,
         lastPickupTime: 0,
         respawnDelay: 60000

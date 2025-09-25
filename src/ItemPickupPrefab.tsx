@@ -17,10 +17,10 @@ import {
 } from '@ir-engine/ecs'
 import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 
+import { definePrefab } from '@ir-engine/ecs'
 import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { TriggerCallbackComponent } from '@ir-engine/engine/src/scene/components/TriggerCallbackComponent'
 import { Schema, useHookstate } from '@ir-engine/hyperflux'
-import { definePrefab } from '@ir-engine/spatial'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { ColliderComponent } from '@ir-engine/spatial/src/physics/components/ColliderComponent'
 import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
