@@ -121,6 +121,5 @@ export const ItemPickupComponent = defineComponent({
 })
 
 export const ItemPickupPrefab = definePrefab({
-  name: 'ItemPickupPrefab',
   components: [ItemPickupComponent, TransformComponent]
 })
