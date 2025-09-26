@@ -69,7 +69,7 @@ import { CollisionGroups, DefaultCollisionMask } from '@ir-engine/spatial/src/ph
 import { getInteractionGroups } from '@ir-engine/spatial/src/physics/functions/getInteractionGroups'
 import { BodyTypes, SceneQueryType } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
-import { VisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
+import { VisibleComponent, setVisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { ComputedTransformComponent } from '@ir-engine/spatial/src/transform/components/ComputedTransformComponent'
 import { ObjectFitFunctions } from '@ir-engine/spatial/src/transform/functions/ObjectFitFunctions'
 import React, { useEffect } from 'react'
@@ -201,6 +201,51 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
       removeComponent(reticleEntity, MeshComponent)
     }
   }, [weaponType])
+
+  const vignettingEntity = useHookstate(() => {
+    if (!isSelf) return UndefinedEntity
+
+    const viewerEntity = getState(ReferenceSpaceState).viewerEntity
+    const entity = createEntity()
+    setComponent(entity, NameComponent, 'Weapon Vignetting')
+    setComponent(entity, UUIDComponent, { entitySourceID: 'camera' as SourceID, entityID: 'vignetting' as EntityID })
+    setComponent(entity, EntityTreeComponent, { parentEntity: getState(ReferenceSpaceState).localFloorEntity })
+    setComponent(entity, ComputedTransformComponent, {
+      referenceEntities: [viewerEntity],
+      computeFunction: () => {
+        const camera = getComponent(viewerEntity, CameraComponent)
+        const distance = camera.near * 1.1 // 10% in front of camera
+        ObjectFitFunctions.attachObjectInFrontOfCamera(entity, 0.1, distance)
+      }
+    })
+    setComponent(entity, TransformComponent, { position: new Vector3(0, 0, 0.1) })
+
+    // create a simple custom shader on a plane that darkens the edges of the screen
+    const geometry = new RingGeometry(0.2, 1, 32)
+    const material = new MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.5
+    })
+    const mesh = new Mesh(geometry, material)
+    setComponent(entity, MeshComponent, mesh)
+
+    return entity
+  }).value
+
+  const weaponVisible = useHasComponent(weaponEntity, VisibleComponent)
+
+  // apply vignetting effect when using assault rifle or sniper rifle
+  useEffect(() => {
+    if (!isSelf || weaponVisible) return
+
+    if (weaponType !== 'assault_rifle' && weaponType !== 'pulse_rifle') return
+
+    setComponent(vignettingEntity, VisibleComponent)
+    return () => {
+      removeComponent(vignettingEntity, VisibleComponent)
+    }
+  }, [isSelf, weaponType, weaponVisible])
 
   return null
 }
@@ -521,6 +566,14 @@ const lerpCameraZoom = (entity: Entity, zoomIn?: boolean) => {
   controller.gamepadLocalInput.multiplyScalar(1 / zoomWalkSpeed)
   const cameraSettings = getState(CameraSettings)
   cameraSettings.cameraRotationSpeed = 200 / zoomWalkSpeed
+
+  const weaponEntityUUID = getState(WeaponState)[getState(EngineState).userID]?.weaponEntityUUID
+  if (!weaponEntityUUID) return
+  const currentWeaponEntity = UUIDComponent.getEntityByUUID(weaponEntityUUID)
+  if (!currentWeaponEntity) return
+  const weaponTransform = getComponent(currentWeaponEntity, TransformComponent)
+  if (!weaponTransform) return
+  setVisibleComponent(currentWeaponEntity, alpha > 0.75 ? false : true)
 }
 
 const weaponFireQueue = defineActionQueue(WeaponActions.fireWeapon)
