@@ -6,7 +6,6 @@ import {
   EntitySchema,
   EntityTreeComponent,
   EntityUUID,
-  InputSystemGroup,
   NetworkObjectComponent,
   SourceID,
   UUIDComponent,
@@ -16,6 +15,7 @@ import {
   defineSystem,
   getAncestorWithComponents,
   getComponent,
+  getOptionalComponent,
   hasComponent,
   isAuthorityOverEntity,
   removeComponent,
@@ -44,18 +44,24 @@ import {
 } from '@ir-engine/hyperflux'
 import { ReferenceSpaceState, TransformComponent } from '@ir-engine/spatial'
 
+import { AvatarControllerComponent } from '@ir-engine/engine/src/avatar/components/AvatarControllerComponent'
 import { AvatarMovementSettingsState } from '@ir-engine/engine/src/avatar/state/AvatarMovementSettingsState'
+import { AvatarInputSystem } from '@ir-engine/engine/src/avatar/systems/AvatarInputSystem'
 import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 import { GrabbedComponent } from '@ir-engine/engine/src/grabbable/GrabbableComponent'
 import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
+import { CameraSettings } from '@ir-engine/spatial/src/camera/CameraState'
 import { CameraComponent } from '@ir-engine/spatial/src/camera/components/CameraComponent'
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
 import { TargetCameraRotationComponent } from '@ir-engine/spatial/src/camera/components/TargetCameraRotationComponent'
 import { FollowCameraMode } from '@ir-engine/spatial/src/camera/types/FollowCameraMode'
 import { mergeBufferGeometries } from '@ir-engine/spatial/src/common/classes/BufferGeometryUtils'
 import { Axis } from '@ir-engine/spatial/src/common/constants/MathConstants'
+import { createTransitionState } from '@ir-engine/spatial/src/common/functions/createTransitionState'
+import { lerp } from '@ir-engine/spatial/src/common/functions/MathLerpFunctions'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
-import { InputComponent } from '@ir-engine/spatial/src/input/components/InputComponent'
+import { InputButtonBindings, InputComponent } from '@ir-engine/spatial/src/input/components/InputComponent'
+import { KeyboardButton, MouseButton } from '@ir-engine/spatial/src/input/state/ButtonState'
 import { InputState } from '@ir-engine/spatial/src/input/state/InputState'
 import { Physics, RaycastArgs } from '@ir-engine/spatial/src/physics/classes/Physics'
 import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
@@ -310,7 +316,7 @@ const onPrimaryClick = () => {
   raycastComponentData.excludeRigidBody = selfAvatarEntity
   raycastComponentData.maxDistance = weaponConfig.distance
 
-  const spread = weaponConfig.spread * 0.1
+  const spread = weaponConfig.spread * 0.1 * lerp(1, 0.2, zoomTransition.alpha)
 
   if (weaponConfig.recoil > 0) {
     const recoilAmount = weaponConfig.recoil * 0.25
@@ -493,21 +499,44 @@ const processWeaponFireAction = (action: typeof WeaponActions.fireWeapon._TYPE) 
   }
 }
 
-const weaponKeys = Object.keys(WeaponConfig) as Weapons[]
+/** @todo maybe replace this with a component WeaponZoomComponent */
+const zoomTransition = createTransitionState(0.1, 'OUT')
+const zoomWalkSpeedModifier = 2
+
+const lerpCameraZoom = (entity: Entity, zoomIn?: boolean) => {
+  const camera = getComponent(entity, CameraComponent)
+
+  zoomTransition.setState(zoomIn ? 'IN' : 'OUT')
+
+  zoomTransition.update(getState(ECSState).deltaSeconds)
+  const alpha = zoomTransition.alpha
+  camera.zoom = alpha + 1
+  camera.updateProjectionMatrix()
+
+  const selfAvatarEntity = AvatarComponent.getSelfAvatarEntity()
+  if (!selfAvatarEntity) return
+  const controller = getOptionalComponent(selfAvatarEntity, AvatarControllerComponent)
+  if (!controller) return
+  const zoomWalkSpeed = lerp(1, zoomWalkSpeedModifier, alpha)
+  controller.gamepadLocalInput.multiplyScalar(1 / zoomWalkSpeed)
+  const cameraSettings = getState(CameraSettings)
+  cameraSettings.cameraRotationSpeed = 200 / zoomWalkSpeed
+}
 
 const weaponFireQueue = defineActionQueue(WeaponActions.fireWeapon)
+
+const WeaponKeybindings = {
+  Fire: [MouseButton.PrimaryClick],
+  Zoom: [MouseButton.SecondaryClick, KeyboardButton.ShiftLeft, KeyboardButton.ShiftRight]
+} as InputButtonBindings
 
 const execute = () => {
   const viewerEntity = getState(ReferenceSpaceState).viewerEntity
 
   if (viewerEntity) {
-    const buttons = InputComponent.getMergedButtons(viewerEntity)
-    if (buttons.PrimaryClick?.pressed) onPrimaryClick()
-    // if (buttons.Digit1?.down) changeWeapon(weaponKeys[0])
-    // if (buttons.Digit2?.down) changeWeapon(weaponKeys[1])
-    // if (buttons.Digit3?.down) changeWeapon(weaponKeys[2])
-    // if (buttons.Digit4?.down) changeWeapon(weaponKeys[3])
-    // lerpCameraZoom(viewerEntity, buttons.SecondaryClick?.down)
+    const buttons = InputComponent.getButtons(viewerEntity, WeaponKeybindings)
+    if (buttons.Fire?.pressed) onPrimaryClick()
+    lerpCameraZoom(viewerEntity, buttons.Zoom?.pressed)
 
     updateIKTargets()
   }
@@ -535,7 +564,7 @@ const WeaponSetupReactor = () => {
 
 export const WeaponSystem = defineSystem({
   uuid: 'hexafield.fps-game.WeaponSystem',
-  insert: { with: InputSystemGroup },
+  insert: { after: AvatarInputSystem },
   execute,
   reactor: () => {
     const avatarMovementSettings = useMutableState(AvatarMovementSettingsState)
