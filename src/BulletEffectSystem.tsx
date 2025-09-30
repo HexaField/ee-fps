@@ -41,7 +41,6 @@ import {
   Vector2,
   Vector3
 } from 'three'
-import { WeaponConfig, Weapons } from './constants'
 import { playSoundEffect } from './SoundEffectSystem'
 import { WeaponComponent } from './WeaponComponent'
 import { WeaponActions } from './WeaponSystem'
@@ -324,14 +323,13 @@ const execute = () => {
     if (!avatarEntity) continue
     const weaponEntity = UUIDComponent.getEntityByUUID(action.weaponEntityUUID)
     if (!weaponEntity) continue
-    const weaponType = getComponent(weaponEntity, WeaponComponent).type as Weapons
-    if (!weaponType) continue
-    const weaponConfig = WeaponConfig[weaponType]
+    const weapon = getComponent(weaponEntity, WeaponComponent)
+    if (!weapon) continue
 
-    const damage = weaponConfig.damage
+    const damage = weapon.damage
 
     const position = getComponent(avatarEntity, TransformComponent).position
-    playSoundEffect(weaponConfig.sound, {
+    playSoundEffect(weapon.sound, {
       position: userID === getState(EngineState).userID ? undefined : position,
       volume: 0.8
     })
@@ -349,9 +347,7 @@ const execute = () => {
       const userCameraTransform = getComponent(userCameraEntity, TransformComponent)
 
       const hitPosition = new Vector3().fromArray(hit.position)
-      const hitDistance = hit.hitEntityUUID
-        ? userCameraTransform.position.distanceTo(hitPosition)
-        : weaponConfig.distance
+      const hitDistance = hit.hitEntityUUID ? userCameraTransform.position.distanceTo(hitPosition) : weapon.distance
       const hitRotationRelativeToCamera = new Quaternion().setFromUnitVectors(
         new Vector3(0, 0, -1),
         hitPosition.clone().sub(userCameraTransform.position).normalize()
@@ -387,9 +383,9 @@ const execute = () => {
         new Mesh(
           new CylinderGeometry(0.005, 0.005, laserLength, 16, 1, false).rotateX(-Math.PI / 2),
           new MeshLambertMaterial({
-            color: new Color(weaponConfig.color).multiplyScalar(2),
+            color: new Color(weapon.color).multiplyScalar(2),
             emissiveIntensity: 10,
-            emissive: new Color(weaponConfig.color).multiplyScalar(2)
+            emissive: new Color(weapon.color).multiplyScalar(2)
           })
         )
       )
@@ -416,7 +412,7 @@ const execute = () => {
       setComponent(hitEffectEntity, EntityTreeComponent, { parentEntity })
       setComponent(hitEffectEntity, VisibleComponent)
 
-      const color = new Color(weaponConfig.color)
+      const color = new Color(weapon.color)
 
       const selfAvatarEntity = AvatarComponent.getSelfAvatarEntity()
 

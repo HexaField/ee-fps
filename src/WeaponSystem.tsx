@@ -82,7 +82,6 @@ import {
   Vector2,
   Vector3
 } from 'three'
-import { WeaponConfig, Weapons } from './constants'
 import { HealthActions, HealthState } from './HealthSystem'
 import { WeaponComponent } from './WeaponComponent'
 
@@ -177,7 +176,8 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
   }).value
 
   const weaponEntity = UUIDComponent.useEntityByUUID(weaponState.weaponEntityUUID.value)
-  const weaponType = useOptionalComponent(weaponEntity, WeaponComponent)?.type as Weapons
+  const weapon = useOptionalComponent(weaponEntity, WeaponComponent)
+  const weaponType = weapon?.type
 
   useEffect(() => {
     if (!isSelf || !weaponType) return
@@ -237,7 +237,7 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
   useEffect(() => {
     if (!isSelf || weaponVisible) return
 
-    if (weaponType !== 'assault_rifle' && weaponType !== 'pulse_rifle') return
+    if (!weapon || weapon?.hasScope) return
 
     setComponent(vignettingEntity, VisibleComponent)
     return () => {
@@ -248,7 +248,7 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
   return null
 }
 
-const lastShotTime = new Map<Weapons, number>()
+const lastShotTime = new Map<Entity, number>()
 const _tempVector3 = new Vector3()
 const _camera = new PerspectiveCamera()
 
@@ -271,26 +271,25 @@ const onPrimaryClick = () => {
   const weaponEntityUUID = getState(WeaponState)[getState(EngineState).userID]?.weaponEntityUUID
   if (!weaponEntityUUID) return
   const currentWeaponEntity = UUIDComponent.getEntityByUUID(weaponEntityUUID)
-  const currentWeapon = getComponent(currentWeaponEntity, WeaponComponent).type as Weapons
-  const weaponConfig = WeaponConfig[currentWeapon]
+  const weapon = getComponent(currentWeaponEntity, WeaponComponent)
 
   const now = getState(ECSState).simulationTime
-  const lastShot = lastShotTime.get(currentWeapon) || 0
-  if (now - lastShot < weaponConfig.timeBetweenShots * 1000) {
+  const lastShot = lastShotTime.get(currentWeaponEntity) || 0
+  if (now - lastShot < weapon.timeBetweenShots * 1000) {
     return
   }
-  lastShotTime.set(currentWeapon, now)
+  lastShotTime.set(currentWeaponEntity, now)
 
   const viewerEntity = getState(ReferenceSpaceState).viewerEntity
   const cameraTransform = getComponent(viewerEntity, TransformComponent)
 
   raycastComponentData.excludeRigidBody = selfAvatarEntity
-  raycastComponentData.maxDistance = weaponConfig.distance
+  raycastComponentData.maxDistance = weapon.distance
 
-  const spread = weaponConfig.spread * 0.1 * lerp(1, 0.2, zoomTransition.alpha)
+  const spread = weapon.spread * 0.1 * lerp(1, 0.2, zoomTransition.alpha)
 
-  if (weaponConfig.recoil > 0) {
-    const recoilAmount = weaponConfig.recoil * 0.25
+  if (weapon.recoil > 0) {
+    const recoilAmount = weapon.recoil * 0.25
     const recoilX = recoilAmount * RAD2DEG * (0.05 - Math.random() * 0.1) * 0.5
     const recoilY = recoilAmount * RAD2DEG * (1 - Math.random() * 0.1)
     const cameraTarget = getComponent(viewerEntity, TargetCameraRotationComponent)
@@ -305,7 +304,7 @@ const onPrimaryClick = () => {
     isPlayer?: boolean
   }[]
 
-  for (let i = 0; i < weaponConfig.projectiles; i++) {
+  for (let i = 0; i < weapon.projectiles; i++) {
     _camera.copy(getComponent(viewerEntity, CameraComponent))
 
     const spreadX = (Math.random() - 0.5) * spread
@@ -329,7 +328,7 @@ const onPrimaryClick = () => {
 
     if (!cameraRaycastHit) {
       entityHits.push({
-        position: new Vector3(0, 0, -1).applyQuaternion(rot).multiplyScalar(weaponConfig.distance).add(_camera.position)
+        position: new Vector3(0, 0, -1).applyQuaternion(rot).multiplyScalar(weapon.distance).add(_camera.position)
       })
       continue
     }
@@ -355,7 +354,7 @@ const onPrimaryClick = () => {
         normal: hit.normal ? (hit.normal.toArray() as [number, number, number]) : undefined,
         hitEntityUUID: hit.hitEntityUUID,
         isPlayer: hit.isPlayer,
-        damage: weaponConfig.damage
+        damage: weapon.damage
       }))
     })
   )
@@ -445,9 +444,8 @@ const processWeaponFireAction = (action: typeof WeaponActions.fireWeapon._TYPE) 
 
   const weaponEntity = UUIDComponent.getEntityByUUID(action.weaponEntityUUID)
   if (!weaponEntity) return
-  const weaponType = getComponent(weaponEntity, WeaponComponent).type as Weapons
-  if (!weaponType) return
-  const weaponConfig = WeaponConfig[weaponType]
+  const weapon = getComponent(weaponEntity, WeaponComponent)
+  if (!weapon) return
 
   for (const ray of action.hits) {
     if (!ray.hitEntityUUID) continue
@@ -458,7 +456,7 @@ const processWeaponFireAction = (action: typeof WeaponActions.fireWeapon._TYPE) 
     if (playerIsAlive) {
       const targetUserID = getComponent(hitEntity, NetworkObjectComponent).ownerId
 
-      const amount = weaponConfig.damage
+      const amount = weapon.damage
       const currentHealth = getState(HealthState)[targetUserID].health
 
       if (currentHealth - amount <= 0) {

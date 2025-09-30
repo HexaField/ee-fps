@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiPackage } from 'react-icons/fi'
@@ -54,10 +52,7 @@ export const ItemPrefabComponentEditor: EditorComponentType = (props) => {
       </InputGroup>
 
       <InputGroup name="Name" label={t('editor:properties.item.lbl-name', 'Item Name')}>
-        <StringInput
-          value={objectPrefabComponent.name}
-          onChange={commitProperty(ItemPickupComponent, 'name')}
-        />
+        <StringInput value={objectPrefabComponent.name} onChange={commitProperty(ItemPickupComponent, 'name')} />
       </InputGroup>
 
       <InputGroup

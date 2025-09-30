@@ -5,8 +5,7 @@ import { FiPackage } from 'react-icons/fi'
 import { commitProperties, EditorComponentType } from '@ir-engine/editor/src/components/properties/Util'
 import NodeEditor from '@ir-engine/editor/src/panels/properties/common/NodeEditor'
 
-import { WeaponConfig } from '../constants'
-import { WeaponComponent } from '../WeaponComponent'
+import { WeaponComponent, WeaponConfig } from '../WeaponComponent'
 
 const weaponOptions = Object.entries(WeaponConfig).map(([key, _]) => ({
   label: key.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
