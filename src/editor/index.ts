@@ -2,7 +2,7 @@ import { ComponentEditorsState } from '@ir-engine/editor/src/services/ComponentE
 import { ComponentShelfCategoriesState } from '@ir-engine/editor/src/services/ComponentShelfCategoriesState'
 import { getMutableState } from '@ir-engine/hyperflux'
 import { ItemPickupComponent } from '../ItemPickupPrefab'
-import { WeaponComponent } from '../WeaponSystem'
+import { WeaponComponent } from '../WeaponComponent'
 import ItemPrefabComponentEditor from './ItemEditor'
 import WeaponPrefabComponentEditor from './WeaponEditor'
 

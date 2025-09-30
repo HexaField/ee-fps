@@ -6,7 +6,7 @@ import { commitProperties, EditorComponentType } from '@ir-engine/editor/src/com
 import NodeEditor from '@ir-engine/editor/src/panels/properties/common/NodeEditor'
 
 import { WeaponConfig } from '../constants'
-import { WeaponComponent } from '../WeaponSystem'
+import { WeaponComponent } from '../WeaponComponent'
 
 const weaponOptions = Object.entries(WeaponConfig).map(([key, _]) => ({
   label: key.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase()),

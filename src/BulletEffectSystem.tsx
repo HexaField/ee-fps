@@ -41,9 +41,10 @@ import {
   Vector2,
   Vector3
 } from 'three'
-import { playSoundEffect } from './SoundEffectSystem'
-import { WeaponActions, WeaponComponent } from './WeaponSystem'
 import { WeaponConfig, Weapons } from './constants'
+import { playSoundEffect } from './SoundEffectSystem'
+import { WeaponComponent } from './WeaponComponent'
+import { WeaponActions } from './WeaponSystem'
 
 const particleParams = {
   systemParameters: {

@@ -6,12 +6,13 @@ import {
   EntitySchema,
   EntityTreeComponent,
   EntityUUID,
+  NetworkObjectAuthorityTag,
   NetworkObjectComponent,
+  QueryReactor,
   SourceID,
   UUIDComponent,
   UndefinedEntity,
   createEntity,
-  defineComponent,
   defineSystem,
   getAncestorWithComponents,
   getComponent,
@@ -19,9 +20,7 @@ import {
   hasComponent,
   isAuthorityOverEntity,
   removeComponent,
-  removeEntity,
   setComponent,
-  useComponent,
   useHasComponent,
   useOptionalComponent
 } from '@ir-engine/ecs'
@@ -47,9 +46,7 @@ import { ReferenceSpaceState, TransformComponent } from '@ir-engine/spatial'
 import { AvatarControllerComponent } from '@ir-engine/engine/src/avatar/components/AvatarControllerComponent'
 import { AvatarMovementSettingsState } from '@ir-engine/engine/src/avatar/state/AvatarMovementSettingsState'
 import { AvatarInputSystem } from '@ir-engine/engine/src/avatar/systems/AvatarInputSystem'
-import { GLTFComponent } from '@ir-engine/engine/src/gltf/GLTFComponent'
 import { GrabbedComponent } from '@ir-engine/engine/src/grabbable/GrabbableComponent'
-import { ShadowComponent } from '@ir-engine/engine/src/scene/components/ShadowComponent'
 import { CameraSettings } from '@ir-engine/spatial/src/camera/CameraState'
 import { CameraComponent } from '@ir-engine/spatial/src/camera/components/CameraComponent'
 import { FollowCameraComponent } from '@ir-engine/spatial/src/camera/components/FollowCameraComponent'
@@ -67,7 +64,7 @@ import { Physics, RaycastArgs } from '@ir-engine/spatial/src/physics/classes/Phy
 import { RigidBodyComponent } from '@ir-engine/spatial/src/physics/components/RigidBodyComponent'
 import { CollisionGroups, DefaultCollisionMask } from '@ir-engine/spatial/src/physics/enums/CollisionGroups'
 import { getInteractionGroups } from '@ir-engine/spatial/src/physics/functions/getInteractionGroups'
-import { BodyTypes, SceneQueryType } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
+import { SceneQueryType } from '@ir-engine/spatial/src/physics/types/PhysicsTypes'
 import { MeshComponent } from '@ir-engine/spatial/src/renderer/components/MeshComponent'
 import { VisibleComponent, setVisibleComponent } from '@ir-engine/spatial/src/renderer/components/VisibleComponent'
 import { ComputedTransformComponent } from '@ir-engine/spatial/src/transform/components/ComputedTransformComponent'
@@ -87,6 +84,7 @@ import {
 } from 'three'
 import { WeaponConfig, Weapons } from './constants'
 import { HealthActions, HealthState } from './HealthSystem'
+import { WeaponComponent } from './WeaponComponent'
 
 export const WeaponActions = {
   changeWeapon: defineAction(
@@ -246,78 +244,6 @@ const UserWeaponReactor = (props: { userID: UserID }) => {
       removeComponent(vignettingEntity, VisibleComponent)
     }
   }, [isSelf, weaponType, weaponVisible])
-
-  return null
-}
-
-export const WeaponComponent = defineComponent({
-  name: 'WeaponComponent',
-
-  jsonID: 'FPS_weapon',
-
-  schema: Schema.Object({
-    type: Schema.String(),
-    src: Schema.String(),
-    sound: Schema.String(),
-    color: Schema.String(),
-    spread: Schema.Number(),
-    projectiles: Schema.Number(),
-    distance: Schema.Number(),
-    recoil: Schema.Number(),
-    damage: Schema.Number(),
-    timeBetweenShots: Schema.Number()
-  }),
-
-  reactor: WeaponReactor
-})
-
-function WeaponReactor(props: { entity: Entity }) {
-  const entity = props.entity
-  const weapon = useComponent(props.entity, WeaponComponent)
-
-  const modelEntityState = useHookstate(UndefinedEntity)
-  const modelURL = weapon.src
-
-  useEffect(() => {
-    const name = weapon.type.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase())
-    setComponent(entity, NameComponent, name)
-    setComponent(entity, VisibleComponent, name)
-    setComponent(entity, RigidBodyComponent, { type: BodyTypes.Dynamic })
-
-    const modelEntity = createEntity()
-    setComponent(entity, NameComponent, name)
-    setComponent(modelEntity, UUIDComponent, {
-      entitySourceID: UUIDComponent.getAsSourceID(entity),
-      entityID: 'model' as EntityID
-    })
-    setComponent(modelEntity, TransformComponent)
-    setComponent(modelEntity, EntityTreeComponent, { parentEntity: entity })
-    setComponent(modelEntity, NameComponent, getComponent(entity, NameComponent) + ' Model')
-    setComponent(modelEntity, VisibleComponent)
-    setComponent(modelEntity, GLTFComponent, { src: modelURL, applyColliders: true, shape: 'mesh' })
-    setComponent(modelEntity, ShadowComponent)
-
-    modelEntityState.set(modelEntity)
-    return () => {
-      removeEntity(modelEntity)
-      modelEntityState.set(UndefinedEntity)
-    }
-  }, [modelURL])
-
-  const grabbed = useHasComponent(props.entity, GrabbedComponent)
-
-  useEffect(() => {
-    if (!grabbed) return
-    const grabberEntity = getComponent(props.entity, GrabbedComponent).grabberEntity
-    const selfAvatar = AvatarComponent.getSelfAvatarEntity()
-    if (grabberEntity !== selfAvatar) return
-    dispatchAction(
-      WeaponActions.changeWeapon({
-        userID: getState(EngineState).userID,
-        weaponEntityUUID: UUIDComponent.get(props.entity)
-      })
-    )
-  }, [grabbed])
 
   return null
 }
@@ -615,6 +541,19 @@ const WeaponSetupReactor = () => {
   return null
 }
 
+const WeaponGrabbedReactor = ({ entity }: { entity: Entity }) => {
+  useEffect(() => {
+    console.log('equipped weapon', entity)
+    dispatchAction(
+      WeaponActions.changeWeapon({
+        userID: getState(EngineState).userID,
+        weaponEntityUUID: UUIDComponent.get(entity)
+      })
+    )
+  }, [])
+  return null
+}
+
 export const WeaponSystem = defineSystem({
   uuid: 'hexafield.fps-game.WeaponSystem',
   insert: { after: AvatarInputSystem },
@@ -632,7 +571,15 @@ export const WeaponSystem = defineSystem({
     const viewerEntity = useMutableState(ReferenceSpaceState).viewerEntity.value
     if (!viewerEntity) return null
 
-    return <WeaponSetupReactor />
+    return (
+      <>
+        <WeaponSetupReactor />
+        <QueryReactor
+          Components={[WeaponComponent, GrabbedComponent, NetworkObjectAuthorityTag]}
+          ChildEntityReactor={WeaponGrabbedReactor}
+        />
+      </>
+    )
   }
 })
 
