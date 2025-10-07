@@ -22,7 +22,8 @@ import {
   removeComponent,
   setComponent,
   useHasComponent,
-  useOptionalComponent
+  useOptionalComponent,
+  useQuery
 } from '@ir-engine/ecs'
 import { ikTargets } from '@ir-engine/engine/src/avatar/animation/Util'
 import { AvatarRigComponent } from '@ir-engine/engine/src/avatar/components/AvatarAnimationComponent'
@@ -557,17 +558,21 @@ export const WeaponSystem = defineSystem({
   insert: { after: AvatarInputSystem },
   execute,
   reactor: () => {
+    const isInGame = useQuery([WeaponComponent]).length > 0
+
     const avatarMovementSettings = useMutableState(AvatarMovementSettingsState)
 
     useEffect(() => {
-      if (avatarMovementSettings.runSpeed.value === 10) return
+      if (avatarMovementSettings.runSpeed.value === 10 || !isInGame) return
       avatarMovementSettings.jumpHeight.set(1)
       avatarMovementSettings.runSpeed.set(5)
       avatarMovementSettings.walkSpeed.set(3)
-    }, [avatarMovementSettings.runSpeed.value])
+    }, [avatarMovementSettings.runSpeed.value, isInGame])
 
     const viewerEntity = useMutableState(ReferenceSpaceState).viewerEntity.value
     if (!viewerEntity) return null
+
+    if (!isInGame) return null
 
     return (
       <>

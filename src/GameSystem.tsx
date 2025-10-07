@@ -1,6 +1,7 @@
-import { PresentationSystemGroup, defineSystem } from '@ir-engine/ecs'
+import { PresentationSystemGroup, defineSystem, useQuery } from '@ir-engine/ecs'
 import { Schema, UserID, WorldUserState, defineAction, dispatchAction, useMutableState } from '@ir-engine/hyperflux'
 import React, { useEffect } from 'react'
+import { WeaponComponent } from './WeaponComponent'
 
 export class PlayerActions {
   static playerJoined = defineAction(
@@ -32,6 +33,9 @@ export const GameSystem = defineSystem({
   reactor: () => {
     /** @todo this will be replaced with some lobby/game active logic */
     const users = useMutableState(WorldUserState).keys
+    const isInGame = useQuery([WeaponComponent]).length > 0
+
+    if (!isInGame) return null
 
     return (
       <>

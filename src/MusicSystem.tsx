@@ -6,14 +6,16 @@ import {
   UUIDComponent,
   createEntity,
   defineSystem,
-  setComponent
+  setComponent,
+  useQuery
 } from '@ir-engine/ecs'
 import { MediaComponent } from '@ir-engine/engine/src/scene/components/MediaComponent'
 import { PlayMode } from '@ir-engine/engine/src/scene/constants/PlayMode'
 import { NameComponent } from '@ir-engine/spatial/src/common/NameComponent'
 import { TransformComponent } from '@ir-engine/spatial/src/transform/components/TransformComponent'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { assetPath } from './constants'
+import { WeaponComponent } from './WeaponComponent'
 
 const MUSIC_TRACKS = [assetPath + 'music/track1.mp3', assetPath + 'music/track2.mp3']
 
@@ -44,5 +46,9 @@ const MusicReactor = () => {
 export const MusicSystem = defineSystem({
   uuid: 'hexafield.fps-game.MusicSystem',
   insert: { after: PresentationSystemGroup },
-  reactor: MusicReactor
+  reactor: () => {
+    const isInGame = useQuery([WeaponComponent]).length > 0
+    if (!isInGame) return null
+    return <MusicReactor />
+  }
 })
