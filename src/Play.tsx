@@ -29,14 +29,15 @@ export default function Play() {
   useSpatialEngine()
   useEngineCanvas(ref)
   useLoadLocation({ locationName: 'fps' })
+  
 
   useEffect(() => {
     getMutableState(NetworkState).config.set({
       world: true,
       media: true,
       friends: true,
-      instanceID: false,
-      roomID: true
+      instanceID: true,
+      roomID: false
     })
   }, [])
 
